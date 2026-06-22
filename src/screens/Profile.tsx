@@ -1,6 +1,7 @@
 import { useGame } from '../context/GameContext'
 import { masteryLevel } from '../srs'
 import { requestNotificationPermission, notificationsSupported } from '../lib/notifications'
+import Achievements from './Achievements'
 
 export default function Profile({ onPremium }: { onPremium: () => void }) {
   const { state, dispatch } = useGame()
@@ -54,6 +55,8 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
         <Stat icon="📖" value={learning} label="Aprendiendo" />
         <Stat icon="📕" value={state.readStories.length} label="Historias" />
       </div>
+
+      <Achievements />
 
       <div className="settings">
         <button className="setting-row" onClick={onPremium}>
