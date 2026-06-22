@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useGame } from './context/GameContext'
+import { useT } from './i18n'
 import { getDueCards } from './srs'
 import { shouldRemindNow, showReminder } from './lib/notifications'
 import Landing from './screens/Landing'
@@ -13,16 +14,19 @@ import Leagues from './screens/Leagues'
 import Tutor from './screens/Tutor'
 import Premium from './screens/Premium'
 import Store from './screens/Store'
+import GrammarReference from './screens/GrammarReference'
 
 type Tab = 'home' | 'tutor' | 'stories' | 'leagues' | 'practice' | 'profile'
 
 export default function App() {
   const { state, dispatch } = useGame()
+  const t = useT()
   const [tab, setTab] = useState<Tab>('home')
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
   const [showPremium, setShowPremium] = useState(false)
   const [showStore, setShowStore] = useState(false)
+  const [showGrammar, setShowGrammar] = useState(false)
   const [showLanding, setShowLanding] = useState(true)
 
   // Retorno desde el pago de Stripe (?premium=success)
@@ -46,8 +50,8 @@ export default function App() {
       }
     }
     check()
-    const t = setInterval(check, 60000)
-    return () => clearInterval(t)
+    const timer = setInterval(check, 60000)
+    return () => clearInterval(timer)
   }, [
     state.onboarded,
     state.reminderEnabled,
@@ -78,14 +82,18 @@ export default function App() {
     return <Premium onClose={() => setShowPremium(false)} />
   }
 
+  if (showGrammar) {
+    return <GrammarReference onExit={() => setShowGrammar(false)} />
+  }
+
   if (showStore) {
     return (
       <div className="app">
         <header className="topbar">
           <button className="link-btn" onClick={() => setShowStore(false)}>
-            ← Volver
+            {t('back')}
           </button>
-          <div className="tb-brand">🛒 Tienda</div>
+          <div className="tb-brand">🛒 {t('store')}</div>
           <span style={{ width: 60 }} />
         </header>
         <main className="content">
@@ -107,25 +115,27 @@ export default function App() {
         {tab === 'stories' && <Stories />}
         {tab === 'leagues' && <Leagues />}
         {tab === 'practice' && <Practice key={practiceKey} />}
-        {tab === 'profile' && <Profile onPremium={() => setShowPremium(true)} />}
+        {tab === 'profile' && (
+          <Profile onPremium={() => setShowPremium(true)} onGrammar={() => setShowGrammar(true)} />
+        )}
       </main>
 
       <nav className="bottom-nav">
-        <NavBtn active={tab === 'home'} icon="🏠" label="Aprender" onClick={() => setTab('home')} />
-        <NavBtn active={tab === 'tutor'} icon="🤖" label="Tutor" onClick={() => setTab('tutor')} />
+        <NavBtn active={tab === 'home'} icon="🏠" label={t('nav_learn')} onClick={() => setTab('home')} />
+        <NavBtn active={tab === 'tutor'} icon="🤖" label={t('nav_tutor')} onClick={() => setTab('tutor')} />
         <NavBtn
           active={tab === 'practice'}
           icon="🔁"
-          label="Repasar"
+          label={t('nav_review')}
           badge={due > 0 ? due : undefined}
           onClick={() => {
             setPracticeKey((k) => k + 1)
             setTab('practice')
           }}
         />
-        <NavBtn active={tab === 'stories'} icon="📖" label="Historias" onClick={() => setTab('stories')} />
-        <NavBtn active={tab === 'leagues'} icon="🏆" label="Ligas" onClick={() => setTab('leagues')} />
-        <NavBtn active={tab === 'profile'} icon="👤" label="Perfil" onClick={() => setTab('profile')} />
+        <NavBtn active={tab === 'stories'} icon="📖" label={t('nav_stories')} onClick={() => setTab('stories')} />
+        <NavBtn active={tab === 'leagues'} icon="🏆" label={t('nav_leagues')} onClick={() => setTab('leagues')} />
+        <NavBtn active={tab === 'profile'} icon="👤" label={t('nav_profile')} onClick={() => setTab('profile')} />
       </nav>
     </div>
   )
@@ -133,6 +143,7 @@ export default function App() {
 
 function TopBar({ onPremium, onStore }: { onPremium: () => void; onStore: () => void }) {
   const { state } = useGame()
+  const t = useT()
   return (
     <header className="topbar">
       <div className="tb-brand">
@@ -145,13 +156,13 @@ function TopBar({ onPremium, onStore }: { onPremium: () => void; onStore: () => 
           </span>
         ) : (
           <button className="tb-premium" onClick={onPremium}>
-            👑 Premium
+            👑 {t('premium')}
           </button>
         )}
         <span className="tb-stat streak" title="Racha">
           🔥 {state.streak}
         </span>
-        <button className="tb-stat gem tb-gem-btn" title="Tienda" onClick={onStore}>
+        <button className="tb-stat gem tb-gem-btn" title={t('store')} onClick={onStore}>
           💎 {state.gems}
         </button>
         {!state.isPremium && (

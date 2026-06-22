@@ -1,4 +1,5 @@
 import { useGame, MAX_HEARTS } from '../context/GameContext'
+import { useT } from '../i18n'
 
 const GEM_PACKS = [
   { id: 'p1', gems: 200, price: '0,99 €', emoji: '💎' },
@@ -8,6 +9,7 @@ const GEM_PACKS = [
 
 export default function Store() {
   const { state, dispatch } = useGame()
+  const t = useT()
 
   function buyPack(amount: number) {
     // Demo: añade gemas directamente. En producción, conectar a Stripe
@@ -19,17 +21,17 @@ export default function Store() {
   return (
     <div className="store fade-in">
       <div className="store-balance">
-        <span>Tu saldo</span>
+        <span>{t('your_balance')}</span>
         <strong>💎 {state.gems}</strong>
       </div>
 
       {/* Gastar gemas */}
-      <h3 className="store-h3">🛒 Canjea tus gemas</h3>
+      <h3 className="store-h3">{t('redeem_gems')}</h3>
       <div className="store-items">
         <div className="store-item">
           <span className="si-emoji">❤️</span>
           <span className="si-info">
-            <strong>Recargar vidas</strong>
+            <strong>{t('refill_lives')}</strong>
             <small>Rellena tus {MAX_HEARTS} corazones</small>
           </span>
           <button
@@ -44,7 +46,7 @@ export default function Store() {
         <div className="store-item">
           <span className="si-emoji">🧊</span>
           <span className="si-info">
-            <strong>Protector de racha</strong>
+            <strong>{t('streak_freeze')}</strong>
             <small>Salva tu racha si fallas un día (tienes {state.streakFreezes}/3)</small>
           </span>
           <button
@@ -58,7 +60,7 @@ export default function Store() {
       </div>
 
       {/* Comprar gemas */}
-      <h3 className="store-h3">💳 Consigue más gemas</h3>
+      <h3 className="store-h3">{t('get_more_gems')}</h3>
       <div className="gem-packs">
         {GEM_PACKS.map((p) => (
           <button key={p.id} className={`gem-pack ${p.best ? 'best' : ''}`} onClick={() => buyPack(p.gems)}>

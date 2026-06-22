@@ -1,10 +1,19 @@
 import { useGame } from '../context/GameContext'
+import { useT } from '../i18n'
 import { masteryLevel } from '../srs'
 import { requestNotificationPermission, notificationsSupported } from '../lib/notifications'
 import Achievements from './Achievements'
+import StreakCalendar from './StreakCalendar'
 
-export default function Profile({ onPremium }: { onPremium: () => void }) {
+export default function Profile({
+  onPremium,
+  onGrammar,
+}: {
+  onPremium: () => void
+  onGrammar: () => void
+}) {
   const { state, dispatch } = useGame()
+  const t = useT()
   const cards = Object.values(state.srs)
   const mastered = cards.filter((c) => masteryLevel(c) === 'mastered').length
   const learning = cards.filter((c) => ['learning', 'review'].includes(masteryLevel(c))).length
@@ -18,15 +27,15 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
         <h2>
           {state.name || 'Estudiante'} {state.isPremium && <span title="Premium">👑</span>}
         </h2>
-        <span className="level-pill">Nivel {state.level}</span>
+        <span className="level-pill">{state.level}</span>
       </div>
 
       {!state.isPremium && (
         <button className="premium-cta" onClick={onPremium}>
           <span className="pc-icon">👑</span>
           <span className="pc-text">
-            <strong>Hazte Premium</strong>
-            <small>Tutor IA ilimitado, vidas infinitas y sin anuncios</small>
+            <strong>{t('become_premium')}</strong>
+            <small>{t('premium_perk')}</small>
           </span>
           <span className="pc-arrow">›</span>
         </button>
@@ -34,7 +43,7 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
 
       <div className="daily-goal-card">
         <div className="dg-top">
-          <span>Meta diaria</span>
+          <span>{t('daily_goal')}</span>
           <span>
             {state.xpToday} / {state.dailyGoal} XP
           </span>
@@ -42,29 +51,55 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
         <div className="dg-bar">
           <div className="dg-fill" style={{ width: `${goalPct}%` }} />
         </div>
-        {goalPct >= 100 && <span className="dg-done">¡Meta cumplida hoy! 🎉</span>}
+        {goalPct >= 100 && <span className="dg-done">{t('goal_done')}</span>}
       </div>
 
       <div className="stat-grid">
-        <Stat icon="🔥" value={state.streak} label="Días de racha" />
-        <Stat icon="⭐" value={state.xp} label="XP total" />
-        <Stat icon="📅" value={state.weeklyXp} label="XP semanal" />
-        <Stat icon="💎" value={state.gems} label="Gemas" />
-        <Stat icon="📚" value={state.completedLessons.length} label="Lecciones" />
-        <Stat icon="🧠" value={mastered} label="Palabras dominadas" />
-        <Stat icon="📖" value={learning} label="Aprendiendo" />
-        <Stat icon="📕" value={state.readStories.length} label="Historias" />
+        <Stat icon="🔥" value={state.streak} label={t('stat_streak')} />
+        <Stat icon="⭐" value={state.xp} label={t('stat_total_xp')} />
+        <Stat icon="📅" value={state.weeklyXp} label={t('stat_week_xp')} />
+        <Stat icon="💎" value={state.gems} label={t('stat_gems')} />
+        <Stat icon="📚" value={state.completedLessons.length} label={t('stat_lessons')} />
+        <Stat icon="🧠" value={mastered} label={t('stat_mastered')} />
+        <Stat icon="📖" value={learning} label={t('stat_learning')} />
+        <Stat icon="📕" value={state.readStories.length} label={t('stat_stories')} />
       </div>
+
+      <h3 className="profile-section-title">📅 {t('streak_calendar')}</h3>
+      <StreakCalendar />
 
       <Achievements />
 
       <div className="settings">
-        <button className="setting-row" onClick={onPremium}>
-          <span>👑 {state.isPremium ? 'Gestionar Premium' : 'Hazte Premium'}</span>
+        <button className="setting-row" onClick={onGrammar}>
+          <span>📘 {t('grammar')}</span>
           <span className="pc-arrow">›</span>
         </button>
+        <button className="setting-row" onClick={onPremium}>
+          <span>👑 {state.isPremium ? t('manage_premium') : t('become_premium')}</span>
+          <span className="pc-arrow">›</span>
+        </button>
+
+        <div className="setting-row">
+          <span>🌍 {t('language')}</span>
+          <div className="lang-switch">
+            <button
+              className={`lang-opt ${state.uiLang === 'es' ? 'active' : ''}`}
+              onClick={() => dispatch({ type: 'SET_LANG', lang: 'es' })}
+            >
+              ES
+            </button>
+            <button
+              className={`lang-opt ${state.uiLang === 'en' ? 'active' : ''}`}
+              onClick={() => dispatch({ type: 'SET_LANG', lang: 'en' })}
+            >
+              EN
+            </button>
+          </div>
+        </div>
+
         <button className="setting-row" onClick={() => dispatch({ type: 'TOGGLE_DARK' })}>
-          <span>{state.darkMode ? '🌙' : '☀️'} Modo oscuro</span>
+          <span>{state.darkMode ? '🌙' : '☀️'} {t('dark_mode')}</span>
           <span className={`toggle ${state.darkMode ? 'on' : ''}`}>
             <span className="knob" />
           </span>
@@ -84,14 +119,14 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
                 }
               }}
             >
-              <span>🔔 Recordatorio diario</span>
+              <span>🔔 {t('daily_reminder')}</span>
               <span className={`toggle ${state.reminderEnabled ? 'on' : ''}`}>
                 <span className="knob" />
               </span>
             </button>
             {state.reminderEnabled && (
               <div className="setting-row reminder-time">
-                <span>⏰ Hora del recordatorio</span>
+                <span>⏰ {t('reminder_time')}</span>
                 <input
                   type="time"
                   className="time-input"
@@ -111,7 +146,7 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
             }
           }}
         >
-          🗑️ Reiniciar progreso
+          🗑️ {t('reset_progress')}
         </button>
       </div>
     </div>

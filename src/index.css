@@ -1974,3 +1974,155 @@ html.dark .premium-cta {
   text-align: center;
   margin-top: 16px;
 }
+
+
+/* ---------- Selector de idioma ---------- */
+.lang-switch {
+  display: flex;
+  gap: 6px;
+}
+.lang-opt {
+  padding: 4px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  font-size: 13px;
+  background: var(--bg-soft);
+  color: var(--muted);
+}
+.lang-opt.active {
+  border-color: var(--green);
+  color: var(--green-dark);
+  background: rgba(88, 204, 2, 0.1);
+}
+
+/* ---------- Título de sección en perfil ---------- */
+.profile-section-title {
+  font-size: 17px;
+  margin: 8px 0 12px;
+}
+
+/* ---------- Calendario de racha ---------- */
+.streak-cal {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 24px;
+}
+.sc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.sc-month {
+  font-size: 15px;
+}
+.sc-nav {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  font-size: 18px;
+  color: var(--text);
+}
+.sc-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+.sc-wd {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+.sc-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.sc-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border-radius: 8px;
+  color: var(--text);
+}
+.sc-cell.empty {
+  background: transparent;
+}
+.sc-cell.active {
+  background: rgba(255, 150, 0, 0.18);
+}
+.sc-cell.today {
+  outline: 2px solid var(--blue);
+}
+.sc-summary {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* ---------- Referencia de gramática ---------- */
+.grammar-ref {
+  padding: 16px;
+}
+.gr-card {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: var(--card);
+}
+.gr-card.open {
+  border-color: var(--blue);
+}
+.gr-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  text-align: left;
+}
+.gr-level {
+  background: var(--blue);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.gr-title {
+  flex: 1;
+  font-size: 15px;
+}
+.gr-chevron {
+  color: var(--muted);
+}
+.gr-body {
+  padding: 0 14px 14px;
+}
+.gr-exp {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.gr-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gr-example {
+  text-align: left;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}

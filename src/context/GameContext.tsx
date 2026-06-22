@@ -50,6 +50,8 @@ function defaultState(): PlayerState {
     reminderTime: '19:00',
     lastReminderDate: null,
     streakFreezes: 0,
+    uiLang: 'es',
+    activeDays: [],
   }
 }
 
@@ -83,6 +85,7 @@ type Action =
   | { type: 'MARK_REMINDED' }
   | { type: 'BUY_GEMS'; amount: number }
   | { type: 'BUY_STREAK_FREEZE' }
+  | { type: 'SET_LANG'; lang: 'es' | 'en' }
   | { type: 'TICK' }
   | { type: 'RESET' }
 
@@ -115,28 +118,28 @@ function applyXp(state: PlayerState, amount: number): PlayerState {
 
 function updateStreak(state: PlayerState): PlayerState {
   const today = todayStr()
-  if (state.lastActiveDay === today) return state
+  const withDay = (s: PlayerState): PlayerState =>
+    s.activeDays.includes(today) ? s : { ...s, activeDays: [...s.activeDays, today] }
+
+  if (state.lastActiveDay === today) return withDay(state)
   if (!state.lastActiveDay) {
-    return { ...state, streak: 1, lastActiveDay: today }
+    return withDay({ ...state, streak: 1, lastActiveDay: today })
   }
   const diffDays = Math.round(
     (new Date(today).getTime() - new Date(state.lastActiveDay).getTime()) / 86400000
   )
   if (diffDays === 1) {
-    // día consecutivo
-    return { ...state, streak: state.streak + 1, lastActiveDay: today }
+    return withDay({ ...state, streak: state.streak + 1, lastActiveDay: today })
   }
   if (diffDays === 2 && state.streakFreezes > 0) {
-    // se saltó un día pero usamos un protector de racha
-    return {
+    return withDay({
       ...state,
       streak: state.streak + 1,
       lastActiveDay: today,
       streakFreezes: state.streakFreezes - 1,
-    }
+    })
   }
-  // racha rota
-  return { ...state, streak: 1, lastActiveDay: today }
+  return withDay({ ...state, streak: 1, lastActiveDay: today })
 }
 
 function reducer(state: PlayerState, action: Action): PlayerState {
@@ -231,6 +234,8 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       if (state.gems < COST || state.streakFreezes >= 3) return state
       return { ...state, gems: state.gems - COST, streakFreezes: state.streakFreezes + 1 }
     }
+    case 'SET_LANG':
+      return { ...state, uiLang: action.lang }
     case 'TICK': {
       // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {

@@ -168,4 +168,8 @@ export interface PlayerState {
   lastReminderDate: string | null
   // ---- Tienda ----
   streakFreezes: number // protectores de racha disponibles
+  // ---- Preferencias de interfaz ----
+  uiLang: 'es' | 'en'
+  // ---- Historial de actividad (para el calendario de racha) ----
+  activeDays: string[] // fechas YYYY-MM-DD con actividad
 }
