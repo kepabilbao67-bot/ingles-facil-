@@ -12,6 +12,7 @@ import Stories from './screens/Stories'
 import Leagues from './screens/Leagues'
 import Tutor from './screens/Tutor'
 import Premium from './screens/Premium'
+import Store from './screens/Store'
 
 type Tab = 'home' | 'tutor' | 'stories' | 'leagues' | 'practice' | 'profile'
 
@@ -21,6 +22,7 @@ export default function App() {
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
   const [showPremium, setShowPremium] = useState(false)
+  const [showStore, setShowStore] = useState(false)
   const [showLanding, setShowLanding] = useState(true)
 
   // Retorno desde el pago de Stripe (?premium=success)
@@ -76,11 +78,28 @@ export default function App() {
     return <Premium onClose={() => setShowPremium(false)} />
   }
 
+  if (showStore) {
+    return (
+      <div className="app">
+        <header className="topbar">
+          <button className="link-btn" onClick={() => setShowStore(false)}>
+            ← Volver
+          </button>
+          <div className="tb-brand">🛒 Tienda</div>
+          <span style={{ width: 60 }} />
+        </header>
+        <main className="content">
+          <Store />
+        </main>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
 
   return (
     <div className="app">
-      <TopBar onPremium={() => setShowPremium(true)} />
+      <TopBar onPremium={() => setShowPremium(true)} onStore={() => setShowStore(true)} />
 
       <main className="content">
         {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} />}
@@ -112,7 +131,7 @@ export default function App() {
   )
 }
 
-function TopBar({ onPremium }: { onPremium: () => void }) {
+function TopBar({ onPremium, onStore }: { onPremium: () => void; onStore: () => void }) {
   const { state } = useGame()
   return (
     <header className="topbar">
@@ -132,9 +151,9 @@ function TopBar({ onPremium }: { onPremium: () => void }) {
         <span className="tb-stat streak" title="Racha">
           🔥 {state.streak}
         </span>
-        <span className="tb-stat gem" title="Gemas">
+        <button className="tb-stat gem tb-gem-btn" title="Tienda" onClick={onStore}>
           💎 {state.gems}
-        </span>
+        </button>
         {!state.isPremium && (
           <span className="tb-stat heart" title="Vidas">
             ❤️ {state.hearts}

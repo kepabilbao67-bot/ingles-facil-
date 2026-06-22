@@ -166,4 +166,6 @@ export interface PlayerState {
   reminderEnabled: boolean
   reminderTime: string // "HH:MM"
   lastReminderDate: string | null
+  // ---- Tienda ----
+  streakFreezes: number // protectores de racha disponibles
 }

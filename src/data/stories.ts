@@ -152,4 +152,62 @@ export const STORIES: Story[] = [
       },
     ],
   },
+  {
+    id: 's6',
+    level: 'A1',
+    title: 'Shopping for Clothes',
+    emoji: '👕',
+    summary: 'Una clienta compra una camiseta en una tienda.',
+    lines: [
+      { speaker: 'Clerk', en: 'Hi! Can I help you?', es: '¡Hola! ¿Puedo ayudarte?' },
+      { speaker: 'Sara', en: 'Yes, I like this t-shirt. How much is it?', es: 'Sí, me gusta esta camiseta. ¿Cuánto cuesta?' },
+      { speaker: 'Clerk', en: "It's fifteen dollars.", es: 'Cuesta quince dólares.' },
+      { speaker: 'Sara', en: 'Do you have it in blue?', es: '¿La tienes en azul?' },
+      { speaker: 'Clerk', en: 'Yes, here you are. The fitting room is over there.', es: 'Sí, aquí tienes. El probador está allí.' },
+      { speaker: 'Sara', en: 'Perfect, I will take it!', es: '¡Perfecto, me la llevo!' },
+    ],
+    questions: [
+      {
+        question: '¿Qué quiere comprar Sara?',
+        options: ['unos zapatos', 'una camiseta', 'un abrigo', 'un sombrero'],
+        answer: 'una camiseta',
+      },
+      {
+        question: '¿Cuánto cuesta?',
+        options: ['cinco dólares', 'quince dólares', 'cincuenta dólares', 'diez dólares'],
+        answer: 'quince dólares',
+      },
+      {
+        question: '¿De qué color la quiere?',
+        options: ['rojo', 'verde', 'azul', 'negro'],
+        answer: 'azul',
+      },
+    ],
+  },
+  {
+    id: 's7',
+    level: 'B2',
+    title: 'A Job Well Done',
+    emoji: '📊',
+    summary: 'Una jefa felicita a su equipo tras un proyecto.',
+    lines: [
+      { speaker: 'Boss', en: 'I wanted to thank you all for your hard work.', es: 'Quería agradeceros a todos vuestro gran esfuerzo.' },
+      { speaker: 'Mark', en: 'It was a real team effort.', es: 'Fue un verdadero trabajo en equipo.' },
+      { speaker: 'Boss', en: 'We met the deadline despite the challenges.', es: 'Cumplimos el plazo a pesar de las dificultades.' },
+      { speaker: 'Mark', en: 'Moreover, the client was extremely satisfied.', es: 'Además, el cliente quedó muy satisfecho.' },
+      { speaker: 'Boss', en: "Exactly. Let's keep up this momentum next quarter.", es: 'Exacto. Mantengamos este ritmo el próximo trimestre.' },
+    ],
+    questions: [
+      {
+        question: '¿Por qué felicita la jefa al equipo?',
+        options: ['por llegar tarde', 'por su gran esfuerzo', 'por irse pronto', 'por discutir'],
+        answer: 'por su gran esfuerzo',
+      },
+      {
+        question: '¿Cómo quedó el cliente?',
+        options: ['enfadado', 'indiferente', 'muy satisfecho', 'confundido'],
+        answer: 'muy satisfecho',
+      },
+    ],
+  },
 ]

@@ -49,6 +49,7 @@ function defaultState(): PlayerState {
     reminderEnabled: false,
     reminderTime: '19:00',
     lastReminderDate: null,
+    streakFreezes: 0,
   }
 }
 
@@ -80,6 +81,8 @@ type Action =
   | { type: 'USE_TUTOR_MESSAGE' }
   | { type: 'SET_REMINDER'; enabled: boolean; time?: string }
   | { type: 'MARK_REMINDED' }
+  | { type: 'BUY_GEMS'; amount: number }
+  | { type: 'BUY_STREAK_FREEZE' }
   | { type: 'TICK' }
   | { type: 'RESET' }
 
@@ -113,11 +116,27 @@ function applyXp(state: PlayerState, amount: number): PlayerState {
 function updateStreak(state: PlayerState): PlayerState {
   const today = todayStr()
   if (state.lastActiveDay === today) return state
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
-  let streak = state.streak
-  if (state.lastActiveDay === yesterday) streak += 1
-  else streak = 1
-  return { ...state, streak, lastActiveDay: today }
+  if (!state.lastActiveDay) {
+    return { ...state, streak: 1, lastActiveDay: today }
+  }
+  const diffDays = Math.round(
+    (new Date(today).getTime() - new Date(state.lastActiveDay).getTime()) / 86400000
+  )
+  if (diffDays === 1) {
+    // día consecutivo
+    return { ...state, streak: state.streak + 1, lastActiveDay: today }
+  }
+  if (diffDays === 2 && state.streakFreezes > 0) {
+    // se saltó un día pero usamos un protector de racha
+    return {
+      ...state,
+      streak: state.streak + 1,
+      lastActiveDay: today,
+      streakFreezes: state.streakFreezes - 1,
+    }
+  }
+  // racha rota
+  return { ...state, streak: 1, lastActiveDay: today }
 }
 
 function reducer(state: PlayerState, action: Action): PlayerState {
@@ -205,6 +224,13 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       }
     case 'MARK_REMINDED':
       return { ...state, lastReminderDate: todayStr() }
+    case 'BUY_GEMS':
+      return { ...state, gems: state.gems + action.amount }
+    case 'BUY_STREAK_FREEZE': {
+      const COST = 200
+      if (state.gems < COST || state.streakFreezes >= 3) return state
+      return { ...state, gems: state.gems - COST, streakFreezes: state.streakFreezes + 1 }
+    }
     case 'TICK': {
       // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {
