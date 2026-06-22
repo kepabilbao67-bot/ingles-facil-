@@ -18,20 +18,30 @@ App estilo Duolingo para aprender inglés, construida como **PWA** (Progressive 
 
 ## 🤖 Configurar el Tutor de IA (Claude)
 
-1. Consigue una clave de API en [console.anthropic.com](https://console.anthropic.com).
-2. En la app, ve a la pestaña **Tutor 🤖** e introduce tu clave (se guarda solo en tu dispositivo).
-3. Elige un escenario y empieza a chatear en inglés.
+Hay **dos modos**:
 
-> ⚠️ **Para producción / app a la venta:** no expongas la clave en el cliente. Crea un pequeño backend (serverless) que reciba los mensajes y llame a Claude con la clave guardada en el servidor. El cliente actual usa el header `anthropic-dangerous-direct-browser-access` solo para el MVP/demo.
+**A) Modo demo (rápido):** el usuario pega su propia clave de Claude en la app.
+1. Consigue una clave en [console.anthropic.com](https://console.anthropic.com).
+2. En la app, pestaña **Tutor 🤖** → introduce tu clave (se guarda solo en tu dispositivo).
 
-## 💰 Monetización (vender la app)
+**B) Modo producción (recomendado para vender):** un backend oculta la clave.
+1. Despliega el proyecto en **Vercel** (incluye las funciones de la carpeta `api/`).
+2. En Vercel añade la variable de entorno `ANTHROPIC_API_KEY` (tu clave de Claude).
+3. Añade la variable del cliente `VITE_API_BASE` con la URL de tu despliegue (ej. `https://tu-app.vercel.app`) y vuelve a desplegar.
+4. Listo: el tutor llamará a `/api/tutor` y **la clave nunca sale del servidor**.
 
-La app ya incluye el sistema **freemium** completo (UI de planes, muro de pago, ventajas Premium y límites para usuarios gratis). Para **cobrar de verdad** integra una pasarela en `src/screens/Premium.tsx` (función `purchase`):
+## 💰 Cobrar de verdad con Stripe
 
-- **Web/PWA:** [Stripe Checkout](https://stripe.com) o Stripe Payment Links.
-- **Android (APK/Play Store):** [Google Play Billing](https://developer.android.com/google/play/billing) o [RevenueCat](https://www.revenuecat.com) (más fácil, multiplataforma).
+La carpeta `api/` ya incluye `create-checkout-session.js`. Para activarlo:
+1. Crea una cuenta en [stripe.com](https://stripe.com) y dos productos/precios de suscripción (mensual y anual).
+2. En Vercel añade: `STRIPE_SECRET_KEY`, `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_YEARLY`.
+3. Con `VITE_API_BASE` definido, el botón de Premium abrirá el **checkout real de Stripe** con prueba de 7 días.
+4. Al volver del pago (`?premium=success`) la app activa Premium automáticamente.
 
-Otras vías de ingreso: anuncios para usuarios gratis (AdMob), packs de gemas, y contenido premium.
+> Para la versión **APK / Play Store**, en lugar de Stripe usa **Google Play Billing** o **RevenueCat** (obligatorio para suscripciones dentro de apps Android).
+
+Variables de entorno: ver `.env.example`.
+
 
 
 ## 🚀 Cómo ejecutar

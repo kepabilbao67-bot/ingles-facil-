@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { useGame, FREE_TUTOR_LIMIT } from '../context/GameContext'
-import { sendToTutor, type ChatMessage } from '../lib/claude'
+import { sendToTutor, usingSecureBackend, type ChatMessage } from '../lib/claude'
 import { speak } from '../hooks/useSpeech'
 
 interface Props {
@@ -40,14 +40,15 @@ export default function Tutor({ onGoPremium }: Props) {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
 
-  const hasKey = !!state.claudeApiKey
+  const hasKey = usingSecureBackend() || !!state.claudeApiKey
   const limitReached =
     !state.isPremium &&
     state.tutorMessagesDate === new Date().toISOString().slice(0, 10) &&
     state.tutorMessagesToday >= FREE_TUTOR_LIMIT
 
   // ---------- Ajustes (clave API) ----------
-  if (showSettings || !hasKey) {
+  // Si hay backend seguro configurado (VITE_API_BASE) no se pide clave.
+  if ((showSettings || !hasKey) && !usingSecureBackend()) {
     return (
       <div className="tutor-settings fade-in">
         <h2 className="section-title">🤖 Tutor de IA</h2>

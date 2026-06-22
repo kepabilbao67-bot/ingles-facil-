@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGame } from './context/GameContext'
 import { getDueCards } from './srs'
 import Onboarding from './screens/Onboarding'
@@ -14,11 +14,20 @@ import Premium from './screens/Premium'
 type Tab = 'home' | 'tutor' | 'stories' | 'leagues' | 'practice' | 'profile'
 
 export default function App() {
-  const { state } = useGame()
+  const { state, dispatch } = useGame()
   const [tab, setTab] = useState<Tab>('home')
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
   const [showPremium, setShowPremium] = useState(false)
+
+  // Retorno desde el pago de Stripe (?premium=success)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('premium') === 'success') {
+      dispatch({ type: 'GO_PREMIUM' })
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+  }, [dispatch])
 
   if (!state.onboarded) return <Onboarding />
 

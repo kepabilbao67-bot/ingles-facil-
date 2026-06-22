@@ -88,4 +88,68 @@ export const STORIES: Story[] = [
       },
     ],
   },
+  {
+    id: 's4',
+    level: 'A2',
+    title: 'At the Airport',
+    emoji: '🛫',
+    summary: 'Una pasajera hace el check-in para su vuelo.',
+    lines: [
+      { speaker: 'Agent', en: 'Good morning! Can I see your passport, please?', es: '¡Buenos días! ¿Me enseña su pasaporte, por favor?' },
+      { speaker: 'Lucy', en: 'Here you are. I have a flight to Madrid.', es: 'Aquí tiene. Tengo un vuelo a Madrid.' },
+      { speaker: 'Agent', en: 'Perfect. Do you have any bags to check in?', es: 'Perfecto. ¿Tiene maletas que facturar?' },
+      { speaker: 'Lucy', en: 'Yes, just one suitcase.', es: 'Sí, solo una maleta.' },
+      { speaker: 'Agent', en: 'Great. Here is your boarding pass. Gate 12.', es: 'Genial. Aquí tiene su tarjeta de embarque. Puerta 12.' },
+      { speaker: 'Lucy', en: 'Thank you! What time does boarding start?', es: '¡Gracias! ¿A qué hora empieza el embarque?' },
+    ],
+    questions: [
+      {
+        question: '¿A dónde viaja Lucy?',
+        options: ['Madrid', 'Barcelona', 'Roma', 'Lisboa'],
+        answer: 'Madrid',
+      },
+      {
+        question: '¿Cuántas maletas factura?',
+        options: ['ninguna', 'una', 'dos', 'tres'],
+        answer: 'una',
+      },
+      {
+        question: '¿Cuál es su puerta de embarque?',
+        options: ['Puerta 2', 'Puerta 12', 'Puerta 20', 'Puerta 21'],
+        answer: 'Puerta 12',
+      },
+    ],
+  },
+  {
+    id: 's5',
+    level: 'B1',
+    title: 'The Job Interview',
+    emoji: '💼',
+    summary: 'David tiene una entrevista de trabajo.',
+    lines: [
+      { speaker: 'Manager', en: 'Thanks for coming. Tell me about yourself.', es: 'Gracias por venir. Háblame de ti.' },
+      { speaker: 'David', en: 'I am a graphic designer with five years of experience.', es: 'Soy diseñador gráfico con cinco años de experiencia.' },
+      { speaker: 'Manager', en: 'Why do you want to work here?', es: '¿Por qué quieres trabajar aquí?' },
+      { speaker: 'David', en: 'I admire your company and I want to grow with your team.', es: 'Admiro vuestra empresa y quiero crecer con vuestro equipo.' },
+      { speaker: 'Manager', en: 'What are your strengths?', es: '¿Cuáles son tus puntos fuertes?' },
+      { speaker: 'David', en: 'I am creative, organized, and I work well under pressure.', es: 'Soy creativo, organizado y trabajo bien bajo presión.' },
+    ],
+    questions: [
+      {
+        question: '¿Cuál es la profesión de David?',
+        options: ['profesor', 'diseñador gráfico', 'médico', 'ingeniero'],
+        answer: 'diseñador gráfico',
+      },
+      {
+        question: '¿Cuántos años de experiencia tiene?',
+        options: ['dos', 'tres', 'cinco', 'diez'],
+        answer: 'cinco',
+      },
+      {
+        question: '¿Cuál NO es un punto fuerte que menciona?',
+        options: ['creativo', 'organizado', 'puntual', 'trabaja bajo presión'],
+        answer: 'puntual',
+      },
+    ],
+  },
 ]

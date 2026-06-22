@@ -5,6 +5,14 @@
 
 const API_URL = 'https://api.anthropic.com/v1/messages'
 
+// Si defines VITE_API_BASE (ej. https://tu-app.vercel.app) el tutor usará tu
+// backend seguro (/api/tutor) y NO expondrá la clave en el navegador.
+const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || ''
+
+export function usingSecureBackend(): boolean {
+  return !!API_BASE
+}
+
 export interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
@@ -30,6 +38,22 @@ function systemPrompt(scenario: string, level: string): string {
   ].join('\n')
 }
 
+function parseReply(text: string): TutorReply {
+  try {
+    const jsonStart = text.indexOf('{')
+    const jsonEnd = text.lastIndexOf('}')
+    const slice = text.slice(jsonStart, jsonEnd + 1)
+    const parsed = JSON.parse(slice)
+    return {
+      reply: parsed.reply || text,
+      correction: parsed.correction || undefined,
+      translation: parsed.translation || undefined,
+    }
+  } catch {
+    return { reply: text }
+  }
+}
+
 export async function sendToTutor(opts: {
   apiKey: string
   model: string
@@ -39,6 +63,27 @@ export async function sendToTutor(opts: {
 }): Promise<TutorReply> {
   const { apiKey, model, scenario, level, history } = opts
 
+  // --- Modo producción: backend seguro ---
+  if (API_BASE) {
+    const res = await fetch(`${API_BASE}/api/tutor`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ model, scenario, level, history }),
+    })
+    if (!res.ok) {
+      let detail = ''
+      try {
+        detail = (await res.json())?.error || ''
+      } catch {
+        detail = await res.text()
+      }
+      throw new Error(`Error ${res.status}: ${detail}`)
+    }
+    const data = await res.json()
+    return { reply: data.reply, correction: data.correction, translation: data.translation }
+  }
+
+  // --- Modo demo: llamada directa con clave del usuario ---
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -68,20 +113,5 @@ export async function sendToTutor(opts: {
 
   const data = await res.json()
   const text: string = data?.content?.[0]?.text ?? ''
-
-  // Intentar parsear el JSON de la respuesta
-  try {
-    const jsonStart = text.indexOf('{')
-    const jsonEnd = text.lastIndexOf('}')
-    const slice = text.slice(jsonStart, jsonEnd + 1)
-    const parsed = JSON.parse(slice)
-    return {
-      reply: parsed.reply || text,
-      correction: parsed.correction || undefined,
-      translation: parsed.translation || undefined,
-    }
-  } catch {
-    // Si no es JSON valido, devolver el texto tal cual
-    return { reply: text }
-  }
+  return parseReply(text)
 }

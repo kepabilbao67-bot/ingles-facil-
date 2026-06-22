@@ -47,8 +47,26 @@ export default function Premium({ onClose }: Props) {
 
   function purchase() {
     setPurchasing(true)
-    // Compra simulada. En produccion: integrar Stripe (web) o
-    // Google Play Billing / RevenueCat (Android) aqui.
+    const apiBase = (import.meta.env.VITE_API_BASE as string | undefined) || ''
+    if (apiBase) {
+      // Producción: crear sesión de pago real en Stripe y redirigir
+      fetch(`${apiBase}/api/create-checkout-session`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ plan, origin: window.location.origin }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.url) window.location.href = data.url
+          else throw new Error(data.error || 'No se pudo iniciar el pago')
+        })
+        .catch((e) => {
+          alert('Error al iniciar el pago: ' + (e?.message || e))
+          setPurchasing(false)
+        })
+      return
+    }
+    // Demo: activación simulada (sin cobro real)
     setTimeout(() => {
       dispatch({ type: 'GO_PREMIUM' })
       setPurchasing(false)

@@ -22,3 +22,7 @@ yarn-error.log*
 
 # typescript build info
 *.tsbuildinfo
+
+
+# pero sí versionar la plantilla de ejemplo
+!.env.example
