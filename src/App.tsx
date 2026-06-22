@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useGame } from './context/GameContext'
 import { getDueCards } from './srs'
+import { shouldRemindNow, showReminder } from './lib/notifications'
+import Landing from './screens/Landing'
 import Onboarding from './screens/Onboarding'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
@@ -19,6 +21,7 @@ export default function App() {
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
   const [showPremium, setShowPremium] = useState(false)
+  const [showLanding, setShowLanding] = useState(true)
 
   // Retorno desde el pago de Stripe (?premium=success)
   useEffect(() => {
@@ -29,7 +32,35 @@ export default function App() {
     }
   }, [dispatch])
 
-  if (!state.onboarded) return <Onboarding />
+  // Recordatorio diario (cuando la app está abierta y toca la hora)
+  useEffect(() => {
+    if (!state.onboarded || !state.reminderEnabled) return
+    const check = () => {
+      const today = new Date().toISOString().slice(0, 10)
+      const goalMet = state.xpTodayDate === today && state.xpToday >= state.dailyGoal
+      if (!goalMet && shouldRemindNow(state.reminderTime, state.lastReminderDate)) {
+        showReminder(state.streak)
+        dispatch({ type: 'MARK_REMINDED' })
+      }
+    }
+    check()
+    const t = setInterval(check, 60000)
+    return () => clearInterval(t)
+  }, [
+    state.onboarded,
+    state.reminderEnabled,
+    state.reminderTime,
+    state.lastReminderDate,
+    state.xpToday,
+    state.xpTodayDate,
+    state.dailyGoal,
+    state.streak,
+    dispatch,
+  ])
+
+  if (!state.onboarded) {
+    return showLanding ? <Landing onStart={() => setShowLanding(false)} /> : <Onboarding />
+  }
 
   if (activeLesson) {
     return (

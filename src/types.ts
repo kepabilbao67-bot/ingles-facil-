@@ -162,4 +162,8 @@ export interface PlayerState {
   claudeModel: string
   tutorMessagesToday: number
   tutorMessagesDate: string | null
+  // ---- Recordatorios / notificaciones ----
+  reminderEnabled: boolean
+  reminderTime: string // "HH:MM"
+  lastReminderDate: string | null
 }

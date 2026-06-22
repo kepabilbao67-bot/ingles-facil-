@@ -46,6 +46,9 @@ function defaultState(): PlayerState {
     claudeModel: 'claude-3-5-sonnet-latest',
     tutorMessagesToday: 0,
     tutorMessagesDate: todayStr(),
+    reminderEnabled: false,
+    reminderTime: '19:00',
+    lastReminderDate: null,
   }
 }
 
@@ -75,6 +78,8 @@ type Action =
   | { type: 'SET_API_KEY'; key: string }
   | { type: 'SET_MODEL'; model: string }
   | { type: 'USE_TUTOR_MESSAGE' }
+  | { type: 'SET_REMINDER'; enabled: boolean; time?: string }
+  | { type: 'MARK_REMINDED' }
   | { type: 'TICK' }
   | { type: 'RESET' }
 
@@ -192,6 +197,14 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       }
       return { ...state, tutorMessagesToday: state.tutorMessagesToday + 1 }
     }
+    case 'SET_REMINDER':
+      return {
+        ...state,
+        reminderEnabled: action.enabled,
+        reminderTime: action.time ?? state.reminderTime,
+      }
+    case 'MARK_REMINDED':
+      return { ...state, lastReminderDate: todayStr() }
     case 'TICK': {
       // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {

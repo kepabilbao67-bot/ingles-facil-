@@ -1,5 +1,6 @@
 import { useGame } from '../context/GameContext'
 import { masteryLevel } from '../srs'
+import { requestNotificationPermission, notificationsSupported } from '../lib/notifications'
 
 export default function Profile({ onPremium }: { onPremium: () => void }) {
   const { state, dispatch } = useGame()
@@ -65,6 +66,40 @@ export default function Profile({ onPremium }: { onPremium: () => void }) {
             <span className="knob" />
           </span>
         </button>
+
+        {notificationsSupported() && (
+          <>
+            <button
+              className="setting-row"
+              onClick={async () => {
+                if (!state.reminderEnabled) {
+                  const ok = await requestNotificationPermission()
+                  dispatch({ type: 'SET_REMINDER', enabled: ok })
+                  if (!ok) alert('Activa las notificaciones en tu navegador para recibir recordatorios.')
+                } else {
+                  dispatch({ type: 'SET_REMINDER', enabled: false })
+                }
+              }}
+            >
+              <span>🔔 Recordatorio diario</span>
+              <span className={`toggle ${state.reminderEnabled ? 'on' : ''}`}>
+                <span className="knob" />
+              </span>
+            </button>
+            {state.reminderEnabled && (
+              <div className="setting-row reminder-time">
+                <span>⏰ Hora del recordatorio</span>
+                <input
+                  type="time"
+                  className="time-input"
+                  value={state.reminderTime}
+                  onChange={(e) => dispatch({ type: 'SET_REMINDER', enabled: true, time: e.target.value })}
+                />
+              </div>
+            )}
+          </>
+        )}
+
         <button
           className="setting-row danger"
           onClick={() => {

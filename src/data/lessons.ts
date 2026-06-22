@@ -738,6 +738,84 @@ export const UNITS: Unit[] = [
       },
     ],
   },
+  {
+    id: 'u9',
+    level: 'C1',
+    title: 'Inglés Avanzado',
+    description: 'Matices, conectores y expresiones formales',
+    color: '#8e44ad',
+    lessons: [
+      {
+        id: 'u9l1',
+        unitId: 'u9',
+        title: 'Conectores y Matices',
+        icon: '🎓',
+        grammarTip: {
+          title: 'Conectores avanzados (linking words)',
+          explanation:
+            'En nivel C1 se usan conectores sofisticados para dar fluidez y precisión: "nevertheless" (sin embargo), "moreover" (además), "whereas" (mientras que), "despite" (a pesar de). Aportan formalidad y cohesión al discurso.',
+          examples: [
+            { en: 'The plan was risky; nevertheless, it succeeded.', es: 'El plan era arriesgado; sin embargo, tuvo éxito.' },
+            { en: 'She is calm, whereas her brother is nervous.', es: 'Ella es tranquila, mientras que su hermano es nervioso.' },
+            { en: 'Despite the rain, we went out.', es: 'A pesar de la lluvia, salimos.' },
+          ],
+        },
+        vocab: [
+          { en: 'nevertheless', es: 'sin embargo', ipa: '/ˌnevərðəˈles/' },
+          { en: 'moreover', es: 'además', ipa: '/mɔːrˈoʊvər/' },
+          { en: 'whereas', es: 'mientras que', ipa: '/weərˈæz/' },
+          { en: 'despite', es: 'a pesar de', ipa: '/dɪˈspaɪt/' },
+          { en: 'thorough', es: 'minucioso', ipa: '/ˈθʌroʊ/' },
+        ],
+        exercises: [
+          {
+            id: 'e1',
+            type: 'multipleChoice',
+            prompt: 'Selecciona la traducción correcta',
+            question: 'nevertheless',
+            audioText: 'nevertheless',
+            options: ['además', 'sin embargo', 'por lo tanto', 'mientras'],
+            answer: 'sin embargo',
+          },
+          {
+            id: 'e2',
+            type: 'fillBlank',
+            prompt: 'Completa con el conector adecuado',
+            sentence: '___ the high cost, the project continued.',
+            audioText: 'Despite the high cost, the project continued',
+            options: ['Despite', 'Because', 'So', 'Unless'],
+            answer: 'Despite',
+            translation: 'A pesar del alto coste, el proyecto continuó.',
+          },
+          {
+            id: 'e3',
+            type: 'multipleChoice',
+            prompt: 'Elige el conector de contraste',
+            question: 'mientras que',
+            audioText: 'whereas',
+            options: ['moreover', 'whereas', 'therefore', 'besides'],
+            answer: 'whereas',
+          },
+          {
+            id: 'e4',
+            type: 'translate',
+            prompt: 'Traduce esta frase formal',
+            sourceText: 'Además, la propuesta es realista',
+            audioText: 'Moreover, the proposal is realistic',
+            wordBank: ['Moreover', 'the', 'proposal', 'is', 'realistic', 'However', 'plan'],
+            answerWords: ['Moreover', 'the', 'proposal', 'is', 'realistic'],
+          },
+          {
+            id: 'e5',
+            type: 'speak',
+            prompt: 'Pronuncia esta frase',
+            audioText: 'Nevertheless, we should consider the risks',
+            translation: 'Sin embargo, deberíamos considerar los riesgos',
+          },
+        ],
+      },
+    ],
+  },
 ]
 
 export function getLessonById(id: string) {

@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useGame } from '../context/GameContext'
 import type { CEFRLevel } from '../types'
+import LevelTest from './LevelTest'
 
 const LEVELS: { level: CEFRLevel; label: string; desc: string }[] = [
   { level: 'A1', label: 'Principiante', desc: 'Empiezo desde cero' },
   { level: 'A2', label: 'Básico', desc: 'Sé algunas palabras y frases' },
   { level: 'B1', label: 'Intermedio', desc: 'Puedo mantener conversaciones simples' },
   { level: 'B2', label: 'Avanzado', desc: 'Me defiendo bien' },
+  { level: 'C1', label: 'Experto', desc: 'Hablo con fluidez' },
 ]
 
 const GOALS = [
@@ -16,12 +18,35 @@ const GOALS = [
   { min: 100, label: 'Intenso', desc: '100 XP / día' },
 ]
 
+const LEVEL_NAMES: Record<CEFRLevel, string> = {
+  A1: 'Principiante',
+  A2: 'Básico',
+  B1: 'Intermedio',
+  B2: 'Avanzado',
+  C1: 'Experto',
+}
+
 export default function Onboarding() {
   const { dispatch } = useGame()
   const [step, setStep] = useState(0)
   const [name, setName] = useState('')
   const [level, setLevel] = useState<CEFRLevel>('A1')
   const [goal, setGoal] = useState(30)
+  const [showTest, setShowTest] = useState(false)
+  const [testResult, setTestResult] = useState<CEFRLevel | null>(null)
+
+  if (showTest) {
+    return (
+      <LevelTest
+        onComplete={(lvl) => {
+          setLevel(lvl)
+          setTestResult(lvl)
+          setShowTest(false)
+        }}
+        onSkip={() => setShowTest(false)}
+      />
+    )
+  }
 
   return (
     <div className="onboarding">
@@ -46,7 +71,18 @@ export default function Onboarding() {
       {step === 1 && (
         <div className="ob-card fade-in">
           <h1>¿Cuál es tu nivel, {name}?</h1>
-          <p className="muted">Personalizaremos tus lecciones.</p>
+          <p className="muted">Elige tu nivel o haz un test rápido de 5 preguntas.</p>
+
+          {testResult && (
+            <div className="test-result-banner">
+              📊 Tu test sugiere nivel <strong>{testResult}</strong> ({LEVEL_NAMES[testResult]})
+            </div>
+          )}
+
+          <button className="test-cta" onClick={() => setShowTest(true)}>
+            🧪 Hacer test de nivel
+          </button>
+
           <div className="ob-options">
             {LEVELS.map((l) => (
               <button
