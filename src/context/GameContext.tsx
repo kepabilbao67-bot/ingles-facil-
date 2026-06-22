@@ -153,7 +153,10 @@ function reducer(state: PlayerState, action: Action): PlayerState {
         onboarded: true,
       }
     case 'ADD_XP': {
-      return applyXp(state, action.amount)
+      // Cualquier actividad que dé XP (repaso, tutor...) cuenta para la
+      // racha y el calendario de días activos.
+      const s = updateStreak(state)
+      return applyXp(s, action.amount)
     }
     case 'LOSE_HEART': {
       if (state.isPremium) return state // Premium: vidas ilimitadas
