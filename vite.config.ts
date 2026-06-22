@@ -2,8 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// Para GitHub Pages la app se sirve en /ingles-facil-/.
+// En Vercel (y en local) se sirve en la raíz "/".
+const base = process.env.GITHUB_PAGES === 'true' ? '/ingles-facil-/' : '/'
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   plugins: [
     react(),
     VitePWA({
@@ -17,7 +22,8 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
+        start_url: base,
+        scope: base,
         icons: [
           {
             src: 'icon-192.png',
