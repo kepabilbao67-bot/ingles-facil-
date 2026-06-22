@@ -5,6 +5,9 @@ App estilo Duolingo para aprender inglés, construida como **PWA** (Progressive 
 ## ✨ Características
 
 - 🤖 **Tutor de IA conversacional (Claude)**: chat por escenarios (restaurante, aeropuerto, entrevista, compras, charla libre) con correcciones y traducción.
+- 🎬 **Landing page** de marketing para promocionar y captar usuarios.
+- 🧪 **Test de nivel adaptativo** en el onboarding (coloca al usuario de A1 a C1).
+- 🔔 **Recordatorios diarios** con notificaciones para mantener la racha.
 - 👑 **Modelo Premium (freemium)**: app lista para vender. Tutor IA ilimitado, vidas infinitas, sin anuncios. Planes mensual/anual con prueba gratis.
 - 🎮 **Gamificación**: XP, racha diaria 🔥, vidas ❤️, gemas 💎, meta diaria.
 - 🏆 **Ligas semanales** con ranking y ascensos.
