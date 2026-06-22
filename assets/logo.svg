@@ -5,17 +5,36 @@
       <stop offset="1" stop-color="#46a302"/>
     </linearGradient>
   </defs>
+  <!-- fondo -->
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- orejas -->
   <path d="M150 150 L205 250 L120 235 Z" fill="#ff7a00"/>
   <path d="M362 150 L307 250 L392 235 Z" fill="#ff7a00"/>
   <path d="M158 168 L196 240 L140 230 Z" fill="#ffd2a6"/>
   <path d="M354 168 L316 240 L372 230 Z" fill="#ffd2a6"/>
-  <path d="M256 180 C330 180 372 232 372 300 C372 360 322 405 256 405 C190 405 140 360 140 300 C140 232 182 180 256 180 Z" fill="#ff9600"/>
-  <path d="M256 250 C300 250 330 280 330 320 C330 360 296 392 256 392 C216 392 182 360 182 320 C182 280 212 250 256 250 Z" fill="#ffffff"/>
+
+  <!-- cara (zorro) -->
+  <path d="M256 180
+           C330 180 372 232 372 300
+           C372 360 322 405 256 405
+           C190 405 140 360 140 300
+           C140 232 182 180 256 180 Z" fill="#ff9600"/>
+
+  <!-- mejillas / hocico blanco -->
+  <path d="M256 250
+           C300 250 330 280 330 320
+           C330 360 296 392 256 392
+           C216 392 182 360 182 320
+           C182 280 212 250 256 250 Z" fill="#ffffff"/>
+
+  <!-- ojos -->
   <circle cx="212" cy="288" r="20" fill="#3a2200"/>
   <circle cx="300" cy="288" r="20" fill="#3a2200"/>
   <circle cx="219" cy="281" r="6" fill="#ffffff"/>
   <circle cx="307" cy="281" r="6" fill="#ffffff"/>
+
+  <!-- nariz -->
   <path d="M256 330 l-18 -14 h36 Z" fill="#3a2200"/>
   <path d="M256 330 v18" stroke="#3a2200" stroke-width="6" stroke-linecap="round"/>
 </svg>
