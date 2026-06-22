@@ -3,6 +3,8 @@
 // proxy que guarde la clave de forma segura. Aqui permitimos llamada directa
 // (header anthropic-dangerous-direct-browser-access) para una demo/MVP.
 
+import { APP_SUMMARY } from '../data/appGuide'
+
 const API_URL = 'https://api.anthropic.com/v1/messages'
 
 // Si defines VITE_API_BASE (ej. https://tu-app.vercel.app) el tutor usará tu
@@ -114,4 +116,71 @@ export async function sendToTutor(opts: {
   const data = await res.json()
   const text: string = data?.content?.[0]?.text ?? ''
   return parseReply(text)
+}
+
+// ---- Asistente de ayuda: explica qué puedes hacer con la app ----
+function assistantSystemPrompt(): string {
+  return [
+    'Eres Foxy 🦊, el asistente de ayuda de la app "LinguaFox" para aprender inglés.',
+    'Tu trabajo es explicar, en español claro y amable, todo lo que el usuario puede hacer con la app.',
+    'Responde de forma breve (2-4 frases), concreta y guía al usuario paso a paso si lo necesita.',
+    'Si preguntan algo que no es sobre la app, redirígelos amablemente a aprender inglés con ella.',
+    'Estas son las funciones de la app:',
+    APP_SUMMARY,
+  ].join('\n')
+}
+
+export async function askAssistant(opts: {
+  apiKey: string
+  model: string
+  history: ChatMessage[]
+}): Promise<string> {
+  const { apiKey, model, history } = opts
+
+  // Modo producción: backend seguro
+  if (API_BASE) {
+    const res = await fetch(`${API_BASE}/api/assistant`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ model, history }),
+    })
+    if (!res.ok) {
+      let detail = ''
+      try {
+        detail = (await res.json())?.error || ''
+      } catch {
+        detail = await res.text()
+      }
+      throw new Error(`Error ${res.status}: ${detail}`)
+    }
+    return (await res.json()).reply
+  }
+
+  // Modo demo: llamada directa con la clave del usuario
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: 350,
+      system: assistantSystemPrompt(),
+      messages: history.map((m) => ({ role: m.role, content: m.content })),
+    }),
+  })
+  if (!res.ok) {
+    let detail = ''
+    try {
+      detail = (await res.json())?.error?.message || ''
+    } catch {
+      detail = await res.text()
+    }
+    throw new Error(`Error ${res.status}: ${detail}`)
+  }
+  const data = await res.json()
+  return data?.content?.[0]?.text ?? ''
 }

@@ -15,6 +15,7 @@ import Tutor from './screens/Tutor'
 import Premium from './screens/Premium'
 import Store from './screens/Store'
 import GrammarReference from './screens/GrammarReference'
+import Guide from './screens/Guide'
 
 type Tab = 'home' | 'tutor' | 'stories' | 'leagues' | 'practice' | 'profile'
 
@@ -27,6 +28,7 @@ export default function App() {
   const [showPremium, setShowPremium] = useState(false)
   const [showStore, setShowStore] = useState(false)
   const [showGrammar, setShowGrammar] = useState(false)
+  const [showGuide, setShowGuide] = useState(false)
   const [showLanding, setShowLanding] = useState(true)
 
   // Retorno desde el pago de Stripe (?premium=success)
@@ -86,6 +88,10 @@ export default function App() {
     return <GrammarReference onExit={() => setShowGrammar(false)} />
   }
 
+  if (showGuide) {
+    return <Guide onExit={() => setShowGuide(false)} />
+  }
+
   if (showStore) {
     return (
       <div className="app">
@@ -107,7 +113,11 @@ export default function App() {
 
   return (
     <div className="app">
-      <TopBar onPremium={() => setShowPremium(true)} onStore={() => setShowStore(true)} />
+      <TopBar
+        onPremium={() => setShowPremium(true)}
+        onStore={() => setShowStore(true)}
+        onHelp={() => setShowGuide(true)}
+      />
 
       <main className="content">
         {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} />}
@@ -141,7 +151,15 @@ export default function App() {
   )
 }
 
-function TopBar({ onPremium, onStore }: { onPremium: () => void; onStore: () => void }) {
+function TopBar({
+  onPremium,
+  onStore,
+  onHelp,
+}: {
+  onPremium: () => void
+  onStore: () => void
+  onHelp: () => void
+}) {
   const { state } = useGame()
   const t = useT()
   return (
@@ -150,6 +168,9 @@ function TopBar({ onPremium, onStore }: { onPremium: () => void; onStore: () => 
         <span className="tb-fox">🦊</span> LinguaFox
       </div>
       <div className="tb-stats">
+        <button className="tb-help" onClick={onHelp} title="Guía / Ayuda">
+          ❓
+        </button>
         {state.isPremium ? (
           <span className="tb-stat" title="Premium">
             👑
