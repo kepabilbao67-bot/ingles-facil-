@@ -18,6 +18,7 @@ export default function Lesson({ lessonId, onExit, onFinish }: Props) {
   const [answered, setAnswered] = useState(false)
   const [wasCorrect, setWasCorrect] = useState(false)
   const [finished, setFinished] = useState(false)
+  const [showGrammar, setShowGrammar] = useState(true)
 
   if (!data) return <div className="screen-pad">Lección no encontrada</div>
   const { lesson } = data
@@ -25,6 +26,40 @@ export default function Lesson({ lessonId, onExit, onFinish }: Props) {
   const total = exercises.length
   const current = exercises[index]
   const progress = (index / total) * 100
+
+  // Pantalla de gramatica al inicio (si la leccion tiene una nota)
+  if (showGrammar && lesson.grammarTip) {
+    const tip = lesson.grammarTip
+    return (
+      <div className="grammar-intro fade-in">
+        <div className="lesson-top">
+          <button className="close-btn" onClick={onExit} aria-label="Salir">
+            ✕
+          </button>
+          <span className="grammar-tag">📘 Gramática</span>
+        </div>
+        <div className="grammar-body">
+          <h1>{tip.title}</h1>
+          <p className="grammar-exp">{tip.explanation}</p>
+          <div className="grammar-examples">
+            {tip.examples.map((ex, i) => (
+              <button key={i} className="grammar-example" onClick={() => speak(ex.en)}>
+                <span className="ge-en">
+                  {ex.en} <span className="ge-spk">🔊</span>
+                </span>
+                <span className="ge-es">{ex.es}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="lesson-footer">
+          <button className="btn-primary" onClick={() => setShowGrammar(false)}>
+            ¡ENTENDIDO, A PRACTICAR!
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   function handleResult(correct: boolean) {
     setAnswered(true)

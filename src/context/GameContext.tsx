@@ -10,6 +10,17 @@ function todayStr(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
+function weekKeyStr(d = new Date()): string {
+  // ISO week: YYYY-Www
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
+  const dayNum = (date.getUTCDay() + 6) % 7
+  date.setUTCDate(date.getUTCDate() - dayNum + 3)
+  const firstThursday = new Date(Date.UTC(date.getUTCFullYear(), 0, 4))
+  const week =
+    1 + Math.round(((date.getTime() - firstThursday.getTime()) / 86400000 - 3 + ((firstThursday.getUTCDay() + 6) % 7)) / 7)
+  return `${date.getUTCFullYear()}-W${String(week).padStart(2, '0')}`
+}
+
 function defaultState(): PlayerState {
   return {
     name: '',
@@ -24,9 +35,12 @@ function defaultState(): PlayerState {
     xpToday: 0,
     xpTodayDate: todayStr(),
     completedLessons: [],
+    readStories: [],
     srs: {},
     darkMode: false,
     onboarded: false,
+    weeklyXp: 0,
+    weekKey: weekKeyStr(),
   }
 }
 
@@ -48,6 +62,7 @@ type Action =
   | { type: 'REFILL_HEARTS' }
   | { type: 'BUY_HEARTS' }
   | { type: 'COMPLETE_LESSON'; lessonId: string; vocab: VocabItem[]; xp: number }
+  | { type: 'COMPLETE_STORY'; storyId: string; xp: number }
   | { type: 'REVIEW_CARD'; word: string; quality: number }
   | { type: 'TOGGLE_DARK' }
   | { type: 'TICK' }
@@ -55,10 +70,26 @@ type Action =
 
 function rolloverDaily(state: PlayerState): PlayerState {
   const today = todayStr()
-  if (state.xpTodayDate !== today) {
-    return { ...state, xpToday: 0, xpTodayDate: today }
+  let s = state
+  if (s.xpTodayDate !== today) {
+    s = { ...s, xpToday: 0, xpTodayDate: today }
   }
-  return state
+  const wk = weekKeyStr()
+  if (s.weekKey !== wk) {
+    s = { ...s, weeklyXp: 0, weekKey: wk }
+  }
+  return s
+}
+
+// Aplica XP a los acumuladores total, diario y semanal
+function applyXp(state: PlayerState, amount: number): PlayerState {
+  const s = rolloverDaily(state)
+  return {
+    ...s,
+    xp: s.xp + amount,
+    xpToday: s.xpToday + amount,
+    weeklyXp: s.weeklyXp + amount,
+  }
 }
 
 function updateStreak(state: PlayerState): PlayerState {
@@ -82,8 +113,7 @@ function reducer(state: PlayerState, action: Action): PlayerState {
         onboarded: true,
       }
     case 'ADD_XP': {
-      let s = rolloverDaily(state)
-      return { ...s, xp: s.xp + action.amount, xpToday: s.xpToday + action.amount }
+      return applyXp(state, action.amount)
     }
     case 'LOSE_HEART': {
       const hearts = Math.max(0, state.hearts - 1)
@@ -109,14 +139,22 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       const completedLessons = s.completedLessons.includes(action.lessonId)
         ? s.completedLessons
         : [...s.completedLessons, action.lessonId]
+      s = applyXp(s, action.xp)
       return {
         ...s,
         srs,
         completedLessons,
-        xp: s.xp + action.xp,
-        xpToday: s.xpToday + action.xp,
         gems: s.gems + 5,
       }
+    }
+    case 'COMPLETE_STORY': {
+      let s = rolloverDaily(state)
+      s = updateStreak(s)
+      const readStories = s.readStories.includes(action.storyId)
+        ? s.readStories
+        : [...s.readStories, action.storyId]
+      s = applyXp(s, action.xp)
+      return { ...s, readStories, gems: s.gems + 3 }
     }
     case 'REVIEW_CARD': {
       const card = state.srs[action.word]

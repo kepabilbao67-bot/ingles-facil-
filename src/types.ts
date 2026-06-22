@@ -73,6 +73,12 @@ export interface VocabItem {
   ipa?: string
 }
 
+export interface GrammarTip {
+  title: string // titulo en espanol
+  explanation: string // explicacion en espanol
+  examples: { en: string; es: string }[]
+}
+
 export interface Lesson {
   id: string
   unitId: string
@@ -80,6 +86,30 @@ export interface Lesson {
   icon: string
   vocab: VocabItem[]
   exercises: Exercise[]
+  grammarTip?: GrammarTip // nota de gramatica opcional (se muestra al inicio)
+}
+
+// ---- Historias / Lectura ----
+export interface StoryLine {
+  speaker?: string // nombre del personaje (opcional)
+  en: string
+  es: string
+}
+
+export interface StoryQuestion {
+  question: string // pregunta en espanol
+  options: string[]
+  answer: string
+}
+
+export interface Story {
+  id: string
+  level: CEFRLevel
+  title: string
+  emoji: string
+  summary: string // resumen en espanol
+  lines: StoryLine[]
+  questions: StoryQuestion[]
 }
 
 export interface Unit {
@@ -118,7 +148,11 @@ export interface PlayerState {
   xpToday: number
   xpTodayDate: string | null
   completedLessons: string[]
+  readStories: string[]
   srs: Record<string, SRSCard>
   darkMode: boolean
   onboarded: boolean
+  // XP semanal para la liga (se reinicia cada lunes)
+  weeklyXp: number
+  weekKey: string | null // identificador de la semana (YYYY-Www)
 }

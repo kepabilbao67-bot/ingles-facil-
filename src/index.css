@@ -908,3 +908,262 @@ button {
     transform: translateX(6px);
   }
 }
+
+
+/* ---------- 5 pestañas en nav ---------- */
+.nav-label {
+  font-size: 10px;
+}
+.nav-icon {
+  font-size: 22px;
+}
+
+/* ---------- Títulos de sección ---------- */
+.section-title {
+  font-size: 22px;
+  padding: 4px 0;
+}
+.section-sub {
+  margin-bottom: 16px;
+}
+
+/* ---------- Gramática (intro de lección) ---------- */
+.grammar-intro {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.grammar-tag {
+  background: var(--blue);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+.grammar-body {
+  flex: 1;
+  padding: 16px;
+}
+.grammar-body h1 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--blue);
+}
+.grammar-exp {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.grammar-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.grammar-example {
+  text-align: left;
+  background: var(--bg-soft);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ge-en {
+  font-size: 16px;
+}
+.ge-spk {
+  font-size: 14px;
+}
+.ge-es {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ---------- Historias ---------- */
+.stories {
+  padding: 16px;
+}
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.story-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+}
+.story-emoji {
+  font-size: 36px;
+}
+.story-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.story-title {
+  font-size: 16px;
+}
+.story-read {
+  color: var(--green);
+}
+.story-summary {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.story-level {
+  background: var(--blue);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+/* lector de historia */
+.story-reader {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.reader-title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+}
+.play-all {
+  font-size: 22px;
+}
+.dialogue {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+.line {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.speaker-name {
+  font-size: 12px;
+  color: var(--blue);
+  padding-left: 6px;
+}
+.line-bubble {
+  text-align: left;
+  background: var(--bg-soft);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.line-en {
+  font-size: 16px;
+}
+.line-es {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* ---------- Ligas ---------- */
+.leagues {
+  padding: 16px;
+}
+.league-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  padding: 18px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+.league-emoji {
+  font-size: 40px;
+}
+.league-banner h2 {
+  font-size: 20px;
+}
+.league-banner p {
+  font-size: 13px;
+  opacity: 0.95;
+  font-weight: 700;
+}
+.league-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+.promo {
+  color: var(--green);
+  font-weight: 800;
+}
+.ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 2px solid var(--border);
+}
+.rank-row.me {
+  border-color: var(--green);
+  background: rgba(88, 204, 2, 0.1);
+}
+.rank-row.promote {
+  border-left: 5px solid var(--green);
+}
+.rank-row.demote {
+  border-left: 5px solid var(--red);
+  opacity: 0.85;
+}
+.rank-num {
+  width: 28px;
+  text-align: center;
+  font-size: 15px;
+}
+.rank-avatar {
+  font-size: 22px;
+}
+.rank-name {
+  flex: 1;
+  font-size: 15px;
+}
+.rank-xp {
+  color: var(--muted);
+  font-size: 14px;
+}
+.league-hint,
+.section-sub {
+  text-align: center;
+  margin-top: 16px;
+}

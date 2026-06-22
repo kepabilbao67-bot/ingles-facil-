@@ -6,8 +6,10 @@ import Home from './screens/Home'
 import Lesson from './screens/Lesson'
 import Practice from './screens/Practice'
 import Profile from './screens/Profile'
+import Stories from './screens/Stories'
+import Leagues from './screens/Leagues'
 
-type Tab = 'home' | 'practice' | 'profile'
+type Tab = 'home' | 'stories' | 'leagues' | 'practice' | 'profile'
 
 export default function App() {
   const { state } = useGame()
@@ -35,12 +37,16 @@ export default function App() {
 
       <main className="content">
         {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} />}
+        {tab === 'stories' && <Stories />}
+        {tab === 'leagues' && <Leagues />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'profile' && <Profile />}
       </main>
 
       <nav className="bottom-nav">
         <NavBtn active={tab === 'home'} icon="🏠" label="Aprender" onClick={() => setTab('home')} />
+        <NavBtn active={tab === 'stories'} icon="📖" label="Historias" onClick={() => setTab('stories')} />
+        <NavBtn active={tab === 'leagues'} icon="🏆" label="Ligas" onClick={() => setTab('leagues')} />
         <NavBtn
           active={tab === 'practice'}
           icon="🔁"
