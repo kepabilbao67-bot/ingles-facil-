@@ -1167,3 +1167,348 @@ button {
   text-align: center;
   margin-top: 16px;
 }
+
+
+/* ---------- Nav de 6 pestañas ---------- */
+.bottom-nav .nav-btn {
+  padding: 6px 2px;
+}
+.bottom-nav .nav-label {
+  font-size: 9px;
+}
+.bottom-nav .nav-icon {
+  font-size: 20px;
+}
+
+/* ---------- Botón Premium en topbar ---------- */
+.tb-premium {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #5a3e00;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 900;
+}
+.gold {
+  background: linear-gradient(135deg, #ffc800, #ff9600) !important;
+  box-shadow: 0 4px 0 #d98200 !important;
+  color: #5a3e00 !important;
+}
+.link-btn {
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 800;
+}
+.link-btn.gold {
+  background: none !important;
+  box-shadow: none !important;
+  color: var(--orange) !important;
+}
+.field-label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 10px 0 4px;
+}
+
+/* ---------- Tutor: ajustes ---------- */
+.tutor-settings,
+.tutor-pick {
+  padding: 16px;
+}
+.key-note {
+  font-size: 12px;
+  margin-top: 16px;
+  line-height: 1.5;
+  background: var(--bg-soft);
+  padding: 12px;
+  border-radius: 12px;
+}
+.tutor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.free-badge {
+  background: rgba(255, 200, 0, 0.15);
+  border: 1px solid var(--yellow);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* escenarios */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.scenario-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 16px;
+  padding: 18px 10px;
+  text-align: center;
+}
+.scenario-card small {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+.scenario-emoji {
+  font-size: 34px;
+}
+
+/* ---------- Tutor: chat ---------- */
+.tutor-chat {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px - 70px);
+  max-height: calc(100vh - 60px - 70px);
+}
+.chat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border);
+}
+.chat-title {
+  font-size: 15px;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-bubble {
+  max-width: 85%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.chat-bubble.assistant {
+  background: var(--bg-soft);
+  border: 2px solid var(--border);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.chat-bubble.user {
+  background: var(--blue);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.bubble-en {
+  font-size: 15px;
+}
+.bubble-es {
+  font-size: 13px;
+  opacity: 0.85;
+  font-weight: 700;
+}
+.bubble-correction {
+  font-size: 13px;
+  background: rgba(255, 150, 0, 0.15);
+  color: var(--orange);
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+.typing {
+  font-style: italic;
+  color: var(--muted);
+}
+.chat-error {
+  align-self: center;
+  font-size: 13px;
+  text-align: center;
+}
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 2px solid var(--border);
+}
+.chat-input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--bg-soft);
+  color: var(--text);
+}
+.chat-input:focus {
+  outline: none;
+  border-color: var(--blue);
+}
+.chat-send {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.chat-send:disabled {
+  background: var(--border);
+}
+.limit-banner {
+  padding: 14px;
+  border-top: 2px solid var(--border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* ---------- Premium ---------- */
+.premium {
+  padding: 24px 20px 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+}
+.premium-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.premium-hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.premium-crown {
+  font-size: 64px;
+}
+.premium-hero h1 {
+  font-size: 26px;
+  margin: 8px 0 4px;
+}
+.premium-hero p {
+  color: var(--muted);
+  font-weight: 700;
+}
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+}
+.benefit-icon {
+  font-size: 22px;
+  width: 32px;
+  text-align: center;
+}
+.plans {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.plan {
+  flex: 1;
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+}
+.plan.selected {
+  border-color: var(--yellow);
+  background: rgba(255, 200, 0, 0.1);
+}
+.plan-save {
+  position: absolute;
+  top: -10px;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.plan-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+.plan-price {
+  font-size: 22px;
+}
+.plan-per {
+  font-size: 12px;
+  color: var(--muted);
+}
+.premium-fine {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.premium-active {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+/* CTA premium en perfil */
+.premium-cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #fff4d1, #ffe199);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+html.dark .premium-cta {
+  background: linear-gradient(135deg, #3a3320, #4a3f1c);
+}
+.pc-icon {
+  font-size: 30px;
+}
+.pc-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.pc-text small {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+.pc-arrow {
+  font-size: 24px;
+  color: var(--muted);
+}

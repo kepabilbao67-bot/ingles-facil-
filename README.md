@@ -4,13 +4,35 @@ App estilo Duolingo para aprender inglés, construida como **PWA** (Progressive 
 
 ## ✨ Características
 
+- 🤖 **Tutor de IA conversacional (Claude)**: chat por escenarios (restaurante, aeropuerto, entrevista, compras, charla libre) con correcciones y traducción.
+- 👑 **Modelo Premium (freemium)**: app lista para vender. Tutor IA ilimitado, vidas infinitas, sin anuncios. Planes mensual/anual con prueba gratis.
 - 🎮 **Gamificación**: XP, racha diaria 🔥, vidas ❤️, gemas 💎, meta diaria.
-- 📚 **Lecciones por unidades** (niveles A1–A2) con un mapa de progreso.
+- 🏆 **Ligas semanales** con ranking y ascensos.
+- 📚 **Lecciones por unidades** (A1, A2, B1, B2) con mapa de progreso y notas de gramática.
 - 🧩 **6 tipos de ejercicio**: opción múltiple, traducción con banco de palabras, listening, emparejar, completar el hueco y **pronunciación con micrófono**.
+- 📖 **Historias / Lectura** graduadas por nivel con preguntas de comprensión.
 - 🔁 **Repetición espaciada (SRS)** con el algoritmo SuperMemo-2 para repasar vocabulario.
-- 🔊 **Texto a voz** (escucha la pronunciación nativa) y 🎤 **reconocimiento de voz**.
+- 🔊 **Texto a voz** y 🎤 **reconocimiento de voz**.
 - 🌙 **Modo oscuro** y diseño responsive mobile-first.
 - 💾 **Progreso guardado** en el dispositivo (localStorage). Funciona offline.
+
+## 🤖 Configurar el Tutor de IA (Claude)
+
+1. Consigue una clave de API en [console.anthropic.com](https://console.anthropic.com).
+2. En la app, ve a la pestaña **Tutor 🤖** e introduce tu clave (se guarda solo en tu dispositivo).
+3. Elige un escenario y empieza a chatear en inglés.
+
+> ⚠️ **Para producción / app a la venta:** no expongas la clave en el cliente. Crea un pequeño backend (serverless) que reciba los mensajes y llame a Claude con la clave guardada en el servidor. El cliente actual usa el header `anthropic-dangerous-direct-browser-access` solo para el MVP/demo.
+
+## 💰 Monetización (vender la app)
+
+La app ya incluye el sistema **freemium** completo (UI de planes, muro de pago, ventajas Premium y límites para usuarios gratis). Para **cobrar de verdad** integra una pasarela en `src/screens/Premium.tsx` (función `purchase`):
+
+- **Web/PWA:** [Stripe Checkout](https://stripe.com) o Stripe Payment Links.
+- **Android (APK/Play Store):** [Google Play Billing](https://developer.android.com/google/play/billing) o [RevenueCat](https://www.revenuecat.com) (más fácil, multiplataforma).
+
+Otras vías de ingreso: anuncios para usuarios gratis (AdMob), packs de gemas, y contenido premium.
+
 
 ## 🚀 Cómo ejecutar
 

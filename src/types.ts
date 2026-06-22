@@ -155,4 +155,11 @@ export interface PlayerState {
   // XP semanal para la liga (se reinicia cada lunes)
   weeklyXp: number
   weekKey: string | null // identificador de la semana (YYYY-Www)
+  // ---- Monetizacion / Premium ----
+  isPremium: boolean
+  // ---- Tutor de IA (Claude) ----
+  claudeApiKey: string
+  claudeModel: string
+  tutorMessagesToday: number
+  tutorMessagesDate: string | null
 }

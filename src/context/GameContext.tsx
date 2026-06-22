@@ -41,6 +41,11 @@ function defaultState(): PlayerState {
     onboarded: false,
     weeklyXp: 0,
     weekKey: weekKeyStr(),
+    isPremium: false,
+    claudeApiKey: '',
+    claudeModel: 'claude-3-5-sonnet-latest',
+    tutorMessagesToday: 0,
+    tutorMessagesDate: todayStr(),
   }
 }
 
@@ -65,8 +70,16 @@ type Action =
   | { type: 'COMPLETE_STORY'; storyId: string; xp: number }
   | { type: 'REVIEW_CARD'; word: string; quality: number }
   | { type: 'TOGGLE_DARK' }
+  | { type: 'GO_PREMIUM' }
+  | { type: 'CANCEL_PREMIUM' }
+  | { type: 'SET_API_KEY'; key: string }
+  | { type: 'SET_MODEL'; model: string }
+  | { type: 'USE_TUTOR_MESSAGE' }
   | { type: 'TICK' }
   | { type: 'RESET' }
+
+// Limite de mensajes diarios del tutor para usuarios gratuitos
+export const FREE_TUTOR_LIMIT = 5
 
 function rolloverDaily(state: PlayerState): PlayerState {
   const today = todayStr()
@@ -116,6 +129,7 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       return applyXp(state, action.amount)
     }
     case 'LOSE_HEART': {
+      if (state.isPremium) return state // Premium: vidas ilimitadas
       const hearts = Math.max(0, state.hearts - 1)
       const heartsRefillAt =
         hearts < MAX_HEARTS && state.heartsRefillAt == null
@@ -163,6 +177,21 @@ function reducer(state: PlayerState, action: Action): PlayerState {
     }
     case 'TOGGLE_DARK':
       return { ...state, darkMode: !state.darkMode }
+    case 'GO_PREMIUM':
+      return { ...state, isPremium: true, hearts: MAX_HEARTS, heartsRefillAt: null }
+    case 'CANCEL_PREMIUM':
+      return { ...state, isPremium: false }
+    case 'SET_API_KEY':
+      return { ...state, claudeApiKey: action.key }
+    case 'SET_MODEL':
+      return { ...state, claudeModel: action.model }
+    case 'USE_TUTOR_MESSAGE': {
+      const today = todayStr()
+      if (state.tutorMessagesDate !== today) {
+        return { ...state, tutorMessagesDate: today, tutorMessagesToday: 1 }
+      }
+      return { ...state, tutorMessagesToday: state.tutorMessagesToday + 1 }
+    }
     case 'TICK': {
       // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {

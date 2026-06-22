@@ -1,7 +1,7 @@
 import { useGame } from '../context/GameContext'
 import { masteryLevel } from '../srs'
 
-export default function Profile() {
+export default function Profile({ onPremium }: { onPremium: () => void }) {
   const { state, dispatch } = useGame()
   const cards = Object.values(state.srs)
   const mastered = cards.filter((c) => masteryLevel(c) === 'mastered').length
@@ -13,9 +13,22 @@ export default function Profile() {
     <div className="profile fade-in">
       <div className="profile-head">
         <div className="avatar">🦊</div>
-        <h2>{state.name || 'Estudiante'}</h2>
+        <h2>
+          {state.name || 'Estudiante'} {state.isPremium && <span title="Premium">👑</span>}
+        </h2>
         <span className="level-pill">Nivel {state.level}</span>
       </div>
+
+      {!state.isPremium && (
+        <button className="premium-cta" onClick={onPremium}>
+          <span className="pc-icon">👑</span>
+          <span className="pc-text">
+            <strong>Hazte Premium</strong>
+            <small>Tutor IA ilimitado, vidas infinitas y sin anuncios</small>
+          </span>
+          <span className="pc-arrow">›</span>
+        </button>
+      )}
 
       <div className="daily-goal-card">
         <div className="dg-top">
@@ -33,13 +46,19 @@ export default function Profile() {
       <div className="stat-grid">
         <Stat icon="🔥" value={state.streak} label="Días de racha" />
         <Stat icon="⭐" value={state.xp} label="XP total" />
+        <Stat icon="📅" value={state.weeklyXp} label="XP semanal" />
         <Stat icon="💎" value={state.gems} label="Gemas" />
         <Stat icon="📚" value={state.completedLessons.length} label="Lecciones" />
         <Stat icon="🧠" value={mastered} label="Palabras dominadas" />
         <Stat icon="📖" value={learning} label="Aprendiendo" />
+        <Stat icon="📕" value={state.readStories.length} label="Historias" />
       </div>
 
       <div className="settings">
+        <button className="setting-row" onClick={onPremium}>
+          <span>👑 {state.isPremium ? 'Gestionar Premium' : 'Hazte Premium'}</span>
+          <span className="pc-arrow">›</span>
+        </button>
         <button className="setting-row" onClick={() => dispatch({ type: 'TOGGLE_DARK' })}>
           <span>{state.darkMode ? '🌙' : '☀️'} Modo oscuro</span>
           <span className={`toggle ${state.darkMode ? 'on' : ''}`}>
