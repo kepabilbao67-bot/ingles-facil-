@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useGame } from '../context/GameContext'
+import LevelTest from './LevelTest'
 import type { CEFRLevel } from '../types'
 
 const LEVELS: { level: CEFRLevel; label: string; desc: string }[] = [
@@ -8,6 +9,7 @@ const LEVELS: { level: CEFRLevel; label: string; desc: string }[] = [
   { level: 'B1', label: 'Intermedio', desc: 'Puedo mantener conversaciones simples' },
   { level: 'B2', label: 'Intermedio Alto', desc: 'Me defiendo bien en la mayoría de situaciones' },
   { level: 'C1', label: 'Avanzado', desc: 'Entiendo textos complejos y me expreso con fluidez' },
+  { level: 'C2', label: 'Maestría', desc: 'Comprendo prácticamente todo y me expreso como un nativo' },
 ]
 
 const GOALS = [
@@ -23,6 +25,17 @@ export default function Onboarding() {
   const [name, setName] = useState('')
   const [level, setLevel] = useState<CEFRLevel>('A1')
   const [goal, setGoal] = useState(30)
+  const [showTest, setShowTest] = useState(false)
+
+  if (showTest) {
+    return (
+      <LevelTest onComplete={(detectedLevel) => {
+        setLevel(detectedLevel)
+        setShowTest(false)
+        setStep(2)
+      }} />
+    )
+  }
 
   return (
     <div className="onboarding">
@@ -65,6 +78,9 @@ export default function Onboarding() {
           </div>
           <button className="btn-primary" onClick={() => setStep(2)}>
             CONTINUAR
+          </button>
+          <button className="btn-ghost" onClick={() => setShowTest(true)}>
+            🎓 ¿No sabes tu nivel? Haz el test
           </button>
         </div>
       )}
