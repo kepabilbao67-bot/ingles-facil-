@@ -17,6 +17,8 @@ import SpeedGame from './screens/SpeedGame'
 import ReadingComprehension from './screens/ReadingComprehension'
 import WritingTips from './screens/WritingTips'
 import IrregularVerbs from './screens/IrregularVerbs'
+import Dialogues from './screens/Dialogues'
+import CulturalTips from './screens/CulturalTips'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -34,6 +36,8 @@ export default function App() {
   const [showReading, setShowReading] = useState(false)
   const [showWritingTips, setShowWritingTips] = useState(false)
   const [showIrregularVerbs, setShowIrregularVerbs] = useState(false)
+  const [showDialogues, setShowDialogues] = useState(false)
+  const [showCulturalTips, setShowCulturalTips] = useState(false)
   const [splashDone, setSplashDone] = useState(false)
 
   const handleSplashDone = useCallback(() => setSplashDone(true), [])
@@ -155,6 +159,34 @@ export default function App() {
     )
   }
 
+  if (showDialogues) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowDialogues(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Diálogos</h3>
+        </div>
+        <div className="content">
+          <Dialogues />
+        </div>
+      </div>
+    )
+  }
+
+  if (showCulturalTips) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowCulturalTips(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Cultura</h3>
+        </div>
+        <div className="content">
+          <CulturalTips />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
   const today = new Date().toISOString().slice(0, 10)
   const challengeAvailable = state.lastChallengeDate !== today
@@ -165,7 +197,7 @@ export default function App() {
       <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
-        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} onReading={() => setShowReading(true)} onWritingTips={() => setShowWritingTips(true)} onIrregularVerbs={() => setShowIrregularVerbs(true)} />}
+        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} onReading={() => setShowReading(true)} onWritingTips={() => setShowWritingTips(true)} onIrregularVerbs={() => setShowIrregularVerbs(true)} onDialogues={() => setShowDialogues(true)} onCulturalTips={() => setShowCulturalTips(true)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'challenge' && <DailyChallenge />}
         {tab === 'stats' && <Stats />}

@@ -2060,3 +2060,117 @@ button {
 .tool-icon {
   font-size: 24px;
 }
+
+
+/* ---------- Dialogues ---------- */
+.dialogues {
+  padding: 16px;
+}
+.dial-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.dial-situation {
+  margin-bottom: 14px;
+}
+.dial-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.dial-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  text-align: left;
+  transition: all 0.1s;
+}
+.dial-line:active {
+  border-color: var(--blue);
+  transform: scale(0.99);
+}
+.dial-speaker {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+}
+.dial-text {
+  font-size: 15px;
+  font-weight: 700;
+}
+.dial-translation {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+.dial-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dial-quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- Cultural Tips ---------- */
+.cultural {
+  padding: 16px;
+}
+.cultural h2 {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.cultural-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.cultural-card {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cultural-card:active {
+  transform: scale(0.99);
+}
+.cultural-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cultural-icon {
+  font-size: 24px;
+}
+.cultural-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cultural-title strong {
+  font-size: 14px;
+}
+.cultural-body {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cultural-content {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
