@@ -21,7 +21,7 @@ export default function Profile() {
   const [showThemes, setShowThemes] = useState(false)
 
   // Level path
-  const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1']
+  const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
   const currentLevelIdx = levelOrder.indexOf(state.level)
 
   function exportProgress() {

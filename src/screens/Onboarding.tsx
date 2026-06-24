@@ -8,6 +8,7 @@ const LEVELS: { level: CEFRLevel; label: string; desc: string }[] = [
   { level: 'B1', label: 'Intermedio', desc: 'Puedo mantener conversaciones simples' },
   { level: 'B2', label: 'Intermedio Alto', desc: 'Me defiendo bien en la mayoría de situaciones' },
   { level: 'C1', label: 'Avanzado', desc: 'Entiendo textos complejos y me expreso con fluidez' },
+  { level: 'C2', label: 'Maestría', desc: 'Comprendo prácticamente todo y me expreso como un nativo' },
 ]
 
 const GOALS = [

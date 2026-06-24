@@ -976,6 +976,7 @@ button {
 .level-badge.b1 { background: #fff3e0; color: #e65100; }
 .level-badge.b2 { background: #f3e5f5; color: #7b1fa2; }
 .level-badge.c1 { background: #fce4ec; color: #c62828; }
+.level-badge.c2 { background: #212121; color: #ffd700; }
 
 /* ---------- Confetti / success animation ---------- */
 @keyframes confetti-fall {
