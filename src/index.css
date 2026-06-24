@@ -1071,3 +1071,253 @@ button {
   visibility: visible;
   opacity: 1;
 }
+
+
+/* ---------- Achievements ---------- */
+.achievements {
+  padding: 16px;
+}
+.ach-title {
+  text-align: center;
+  font-size: 22px;
+}
+.ach-subtitle {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.ach-section {
+  margin-bottom: 20px;
+}
+.ach-section h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.ach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ach-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+.ach-card.unlocked {
+  border-color: var(--yellow);
+  background: rgba(255, 200, 0, 0.08);
+}
+.ach-card.locked {
+  opacity: 0.5;
+}
+.ach-icon {
+  font-size: 28px;
+}
+.ach-card strong {
+  font-size: 13px;
+}
+.ach-card small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------- Daily Challenge ---------- */
+.challenge {
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.challenge-body {
+  margin-top: 16px;
+}
+.challenge-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 12px;
+}
+.challenge-reward {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ---------- Stats ---------- */
+.stats {
+  padding: 16px;
+}
+.stats-level-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.stats-level-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.stats-avatar {
+  font-size: 40px;
+}
+.stats-level-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stats-level-bar {
+  height: 12px;
+  background: var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.stats-level-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 6px;
+  transition: width 0.4s;
+}
+.stats-level-text {
+  font-size: 12px;
+  display: block;
+  margin-top: 6px;
+}
+.stats-chart-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.stats-chart-card h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.stats-chart {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  height: 120px;
+  margin-bottom: 12px;
+}
+.chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+}
+.chart-bar-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.chart-bar {
+  width: 70%;
+  min-height: 4px;
+  background: var(--green);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.4s;
+}
+.chart-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 800;
+}
+.chart-value {
+  font-size: 10px;
+  font-weight: 900;
+}
+.stats-summary {
+  display: flex;
+  gap: 10px;
+}
+.stats-summary-item {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stats-summary-item strong {
+  font-size: 18px;
+}
+.stats-summary-item .muted {
+  font-size: 11px;
+}
+
+/* ---------- Avatar Picker ---------- */
+.avatar-picker {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+.avatar-option {
+  font-size: 32px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.15s;
+}
+.avatar-option.selected {
+  border-color: var(--green);
+  background: rgba(88, 204, 2, 0.15);
+  transform: scale(1.1);
+}
+
+/* ---------- Export Panel ---------- */
+.export-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 0;
+}
+
+/* ---------- TopBar extras ---------- */
+.tb-level-badge {
+  background: var(--blue);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 900;
+  margin-left: 6px;
+}
+.trophy-btn {
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
