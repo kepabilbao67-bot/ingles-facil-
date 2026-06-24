@@ -14,6 +14,9 @@ import Records from './screens/Records'
 import PronunciationGuide from './screens/PronunciationGuide'
 import WordOfDay from './screens/WordOfDay'
 import SpeedGame from './screens/SpeedGame'
+import ReadingComprehension from './screens/ReadingComprehension'
+import WritingTips from './screens/WritingTips'
+import IrregularVerbs from './screens/IrregularVerbs'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -28,6 +31,9 @@ export default function App() {
   const [showRecords, setShowRecords] = useState(false)
   const [showPronunciation, setShowPronunciation] = useState(false)
   const [showSpeedGame, setShowSpeedGame] = useState(false)
+  const [showReading, setShowReading] = useState(false)
+  const [showWritingTips, setShowWritingTips] = useState(false)
+  const [showIrregularVerbs, setShowIrregularVerbs] = useState(false)
   const [splashDone, setSplashDone] = useState(false)
 
   const handleSplashDone = useCallback(() => setSplashDone(true), [])
@@ -107,6 +113,48 @@ export default function App() {
     )
   }
 
+  if (showReading) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowReading(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Comprensión Lectora</h3>
+        </div>
+        <div className="content">
+          <ReadingComprehension />
+        </div>
+      </div>
+    )
+  }
+
+  if (showWritingTips) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowWritingTips(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Tips de Escritura</h3>
+        </div>
+        <div className="content">
+          <WritingTips />
+        </div>
+      </div>
+    )
+  }
+
+  if (showIrregularVerbs) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowIrregularVerbs(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Verbos Irregulares</h3>
+        </div>
+        <div className="content">
+          <IrregularVerbs />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
   const today = new Date().toISOString().slice(0, 10)
   const challengeAvailable = state.lastChallengeDate !== today
@@ -117,7 +165,7 @@ export default function App() {
       <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
-        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} />}
+        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} onReading={() => setShowReading(true)} onWritingTips={() => setShowWritingTips(true)} onIrregularVerbs={() => setShowIrregularVerbs(true)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'challenge' && <DailyChallenge />}
         {tab === 'stats' && <Stats />}

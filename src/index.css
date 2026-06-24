@@ -1763,3 +1763,300 @@ button {
 .speed-banner:active {
   transform: scale(0.98);
 }
+
+
+/* ---------- Reading Comprehension ---------- */
+.reading {
+  padding: 16px;
+}
+.reading-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.reading-level {
+  background: var(--blue);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 900;
+}
+.reading-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reading-text {
+  background: var(--bg-soft);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 600;
+}
+.reading-listen {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--blue);
+  border-radius: 12px;
+  background: rgba(28, 176, 246, 0.08);
+  color: var(--blue);
+  font-weight: 800;
+}
+.reading-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.reading-progress {
+  text-align: center;
+  font-size: 13px;
+}
+.reading-q {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.reading-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  gap: 12px;
+}
+
+/* ---------- Writing Tips ---------- */
+.writing-tips {
+  padding: 16px;
+}
+.writing-tips h2 {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.wt-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0;
+}
+.wt-cat {
+  padding: 6px 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  background: var(--card);
+  transition: all 0.15s;
+}
+.wt-cat.active {
+  border-color: var(--green);
+  background: rgba(88, 204, 2, 0.1);
+  color: var(--green);
+}
+.wt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wt-card {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.wt-card:active {
+  transform: scale(0.99);
+}
+.wt-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wt-icon {
+  font-size: 20px;
+}
+.wt-card-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wt-card-title strong {
+  font-size: 14px;
+}
+.wt-level {
+  font-size: 11px;
+  color: var(--muted);
+}
+.wt-arrow {
+  color: var(--muted);
+  font-size: 12px;
+}
+.wt-card-body {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wt-wrong, .wt-correct, .wt-explanation {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.wt-wrong {
+  background: rgba(255, 75, 75, 0.08);
+  border-left: 4px solid var(--red);
+}
+.wt-correct {
+  background: rgba(88, 204, 2, 0.08);
+  border-left: 4px solid var(--green);
+}
+.wt-explanation {
+  background: rgba(28, 176, 246, 0.08);
+  border-left: 4px solid var(--blue);
+}
+.wt-label {
+  font-size: 12px;
+  font-weight: 900;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ---------- Irregular Verbs ---------- */
+.irreg {
+  padding: 16px;
+}
+.irreg h2 {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.irreg-result {
+  text-align: center;
+  background: rgba(88, 204, 2, 0.08);
+  border: 2px solid var(--green);
+  border-radius: 12px;
+  padding: 10px;
+  margin: 12px 0;
+}
+.irreg-quiz-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+.irreg-table {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.irreg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+  background: var(--card);
+  transition: background 0.1s;
+}
+.irreg-row:last-child {
+  border-bottom: none;
+}
+.irreg-row:active {
+  background: var(--bg-soft);
+}
+.irreg-header {
+  background: var(--bg-soft) !important;
+  font-weight: 900;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.irreg-pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.irreg-quiz-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.irreg-quiz-score {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--green);
+}
+.irreg-quiz-card {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.irreg-quiz-word {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.irreg-feedback {
+  padding: 12px;
+  border-radius: 12px;
+  margin: 10px 0;
+  text-align: center;
+}
+.irreg-feedback.correct {
+  background: rgba(88, 204, 2, 0.1);
+  color: var(--green-dark);
+}
+.irreg-feedback.wrong {
+  background: rgba(255, 75, 75, 0.1);
+  color: var(--red);
+}
+
+/* ---------- Tools Banner ---------- */
+.tools-section {
+  margin: 16px 0;
+}
+.tools-section h3 {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 12px;
+  font-weight: 800;
+  transition: all 0.15s;
+}
+.tool-card:active {
+  transform: scale(0.96);
+}
+.tool-icon {
+  font-size: 24px;
+}
