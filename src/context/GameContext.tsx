@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react'
 import type { CEFRLevel, PlayerState, VocabItem } from '../types'
 import { createCard, reviewCard } from '../srs'
+import { applyTheme } from '../data/themes'
 
-const STORAGE_KEY = 'linguafox_state_v1'
+const STORAGE_KEY = 'linguafox_state_v2'
 const MAX_HEARTS = 5
 const HEART_REFILL_MS = 30 * 60 * 1000 // 30 min por corazon
 
@@ -27,14 +28,25 @@ function defaultState(): PlayerState {
     srs: {},
     darkMode: false,
     onboarded: false,
+    avatar: '🦊',
+    playerLevel: 1,
+    xpHistory: {},
+    challengesCompleted: 0,
+    lastChallengeDate: null,
+    soundEnabled: true,
+    unlockedAchievements: [],
+    theme: 'default',
   }
 }
 
 function loadState(): PlayerState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return defaultState()
-    const parsed = { ...defaultState(), ...JSON.parse(raw) } as PlayerState
+    // Try old key too for migration
+    const rawOld = localStorage.getItem('linguafox_state_v1')
+    const source = raw || rawOld
+    if (!source) return defaultState()
+    const parsed = { ...defaultState(), ...JSON.parse(source) } as PlayerState
     // Apply dark mode immediately to prevent flash
     if (parsed.darkMode) {
       document.documentElement.classList.add('dark')
@@ -43,6 +55,35 @@ function loadState(): PlayerState {
   } catch {
     return defaultState()
   }
+}
+
+// Player level thresholds
+export function getPlayerLevelInfo(xp: number): { level: number; title: string; xpForNext: number; xpInLevel: number; progress: number } {
+  const levels = [
+    { xp: 0, title: 'Novato' },
+    { xp: 50, title: 'Aprendiz' },
+    { xp: 150, title: 'Estudiante' },
+    { xp: 300, title: 'Practicante' },
+    { xp: 500, title: 'Intermedio' },
+    { xp: 800, title: 'Avanzado' },
+    { xp: 1200, title: 'Experto' },
+    { xp: 1800, title: 'Maestro' },
+    { xp: 2500, title: 'Sabio' },
+    { xp: 3500, title: 'Leyenda' },
+  ]
+  let lvl = 1
+  for (let i = levels.length - 1; i >= 0; i--) {
+    if (xp >= levels[i].xp) {
+      lvl = i + 1
+      break
+    }
+  }
+  const current = levels[lvl - 1]
+  const next = levels[lvl] || { xp: current.xp + 1000, title: 'Leyenda' }
+  const xpInLevel = xp - current.xp
+  const xpForNext = next.xp - current.xp
+  const progress = Math.min(100, Math.round((xpInLevel / xpForNext) * 100))
+  return { level: lvl, title: current.title, xpForNext, xpInLevel, progress }
 }
 
 type Action =
@@ -54,6 +95,11 @@ type Action =
   | { type: 'COMPLETE_LESSON'; lessonId: string; vocab: VocabItem[]; xp: number }
   | { type: 'REVIEW_CARD'; word: string; quality: number }
   | { type: 'TOGGLE_DARK' }
+  | { type: 'TOGGLE_SOUND' }
+  | { type: 'SET_AVATAR'; avatar: string }
+  | { type: 'COMPLETE_CHALLENGE' }
+  | { type: 'UNLOCK_ACHIEVEMENT'; id: string }
+  | { type: 'SET_THEME'; theme: string }
   | { type: 'TICK' }
   | { type: 'RESET' }
 
@@ -75,6 +121,22 @@ function updateStreak(state: PlayerState): PlayerState {
   return { ...state, streak, lastActiveDay: today }
 }
 
+function updateXpHistory(state: PlayerState, amount: number): PlayerState {
+  const today = todayStr()
+  const xpHistory = { ...state.xpHistory }
+  xpHistory[today] = (xpHistory[today] || 0) + amount
+  // Keep only last 30 days
+  const keys = Object.keys(xpHistory).sort().slice(-30)
+  const trimmed: Record<string, number> = {}
+  keys.forEach((k) => { trimmed[k] = xpHistory[k] })
+  return { ...state, xpHistory: trimmed }
+}
+
+function updatePlayerLevel(state: PlayerState): PlayerState {
+  const info = getPlayerLevelInfo(state.xp)
+  return { ...state, playerLevel: info.level }
+}
+
 function reducer(state: PlayerState, action: Action): PlayerState {
   switch (action.type) {
     case 'ONBOARD':
@@ -87,7 +149,9 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       }
     case 'ADD_XP': {
       let s = rolloverDaily(state)
-      return { ...s, xp: s.xp + action.amount, xpToday: s.xpToday + action.amount }
+      s = updateXpHistory(s, action.amount)
+      s = { ...s, xp: s.xp + action.amount, xpToday: s.xpToday + action.amount }
+      return updatePlayerLevel(s)
     }
     case 'LOSE_HEART': {
       const hearts = Math.max(0, state.hearts - 1)
@@ -106,6 +170,7 @@ function reducer(state: PlayerState, action: Action): PlayerState {
     case 'COMPLETE_LESSON': {
       let s = rolloverDaily(state)
       s = updateStreak(s)
+      s = updateXpHistory(s, action.xp)
       const srs = { ...s.srs }
       for (const v of action.vocab) {
         if (!srs[v.en]) srs[v.en] = createCard(v)
@@ -113,7 +178,7 @@ function reducer(state: PlayerState, action: Action): PlayerState {
       const completedLessons = s.completedLessons.includes(action.lessonId)
         ? s.completedLessons
         : [...s.completedLessons, action.lessonId]
-      return {
+      s = {
         ...s,
         srs,
         completedLessons,
@@ -121,6 +186,7 @@ function reducer(state: PlayerState, action: Action): PlayerState {
         xpToday: s.xpToday + action.xp,
         gems: s.gems + 5,
       }
+      return updatePlayerLevel(s)
     }
     case 'REVIEW_CARD': {
       const card = state.srs[action.word]
@@ -129,8 +195,35 @@ function reducer(state: PlayerState, action: Action): PlayerState {
     }
     case 'TOGGLE_DARK':
       return { ...state, darkMode: !state.darkMode }
+    case 'TOGGLE_SOUND':
+      return { ...state, soundEnabled: !state.soundEnabled }
+    case 'SET_AVATAR':
+      return { ...state, avatar: action.avatar }
+    case 'COMPLETE_CHALLENGE': {
+      let s = rolloverDaily(state)
+      s = updateStreak(s)
+      const xpBonus = 25
+      s = updateXpHistory(s, xpBonus)
+      return updatePlayerLevel({
+        ...s,
+        challengesCompleted: s.challengesCompleted + 1,
+        lastChallengeDate: todayStr(),
+        xp: s.xp + xpBonus,
+        xpToday: s.xpToday + xpBonus,
+        gems: s.gems + 10,
+      })
+    }
+    case 'UNLOCK_ACHIEVEMENT': {
+      if (state.unlockedAchievements.includes(action.id)) return state
+      return {
+        ...state,
+        unlockedAchievements: [...state.unlockedAchievements, action.id],
+        gems: state.gems + 5,
+      }
+    }
+    case 'SET_THEME':
+      return { ...state, theme: action.theme }
     case 'TICK': {
-      // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {
         const hearts = Math.min(MAX_HEARTS, state.hearts + 1)
         const heartsRefillAt = hearts < MAX_HEARTS ? Date.now() + HEART_REFILL_MS : null
@@ -162,6 +255,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', state.darkMode)
   }, [state.darkMode])
+
+  useEffect(() => {
+    applyTheme(state.theme)
+  }, [state.theme])
 
   useEffect(() => {
     const t = setInterval(() => dispatch({ type: 'TICK' }), 10000)

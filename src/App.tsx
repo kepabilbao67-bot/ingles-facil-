@@ -1,13 +1,19 @@
-import { useState } from 'react'
-import { useGame } from './context/GameContext'
+import { useCallback, useState } from 'react'
+import { useGame, getPlayerLevelInfo } from './context/GameContext'
 import { getDueCards } from './srs'
+import SplashScreen from './screens/SplashScreen'
 import Onboarding from './screens/Onboarding'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
 import Practice from './screens/Practice'
 import Profile from './screens/Profile'
+import Achievements from './screens/Achievements'
+import DailyChallenge from './screens/DailyChallenge'
+import Stats from './screens/Stats'
+import Records from './screens/Records'
+import { playComplete } from './hooks/useSounds'
 
-type Tab = 'home' | 'practice' | 'profile'
+type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
 
 export default function App() {
   const { state } = useGame()
@@ -15,6 +21,13 @@ export default function App() {
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [showAchievements, setShowAchievements] = useState(false)
+  const [showRecords, setShowRecords] = useState(false)
+  const [splashDone, setSplashDone] = useState(false)
+
+  const handleSplashDone = useCallback(() => setSplashDone(true), [])
+
+  if (!splashDone) return <SplashScreen onDone={handleSplashDone} />
 
   if (!state.onboarded) return <Onboarding />
 
@@ -26,22 +39,55 @@ export default function App() {
         onFinish={() => {
           setActiveLesson(null)
           setShowConfetti(true)
+          if (state.soundEnabled) playComplete()
           setTimeout(() => setShowConfetti(false), 3000)
         }}
       />
     )
   }
 
+  if (showAchievements) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowAchievements(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Logros</h3>
+        </div>
+        <div className="content">
+          <Achievements />
+        </div>
+      </div>
+    )
+  }
+
+  if (showRecords) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowRecords(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Records</h3>
+        </div>
+        <div className="content">
+          <Records />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
+  const today = new Date().toISOString().slice(0, 10)
+  const challengeAvailable = state.lastChallengeDate !== today
 
   return (
     <div className="app">
       {showConfetti && <Confetti />}
-      <TopBar />
+      <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
         {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
+        {tab === 'challenge' && <DailyChallenge />}
+        {tab === 'stats' && <Stats />}
         {tab === 'profile' && <Profile />}
       </main>
 
@@ -57,18 +103,28 @@ export default function App() {
             setTab('practice')
           }}
         />
+        <NavBtn
+          active={tab === 'challenge'}
+          icon="🏅"
+          label="Reto"
+          badge={challengeAvailable ? 1 : undefined}
+          onClick={() => setTab('challenge')}
+        />
+        <NavBtn active={tab === 'stats'} icon="📊" label="Stats" onClick={() => setTab('stats')} />
         <NavBtn active={tab === 'profile'} icon="👤" label="Perfil" onClick={() => setTab('profile')} />
       </nav>
     </div>
   )
 }
 
-function TopBar() {
+function TopBar({ onAchievements }: { onAchievements: () => void }) {
   const { state } = useGame()
+  const levelInfo = getPlayerLevelInfo(state.xp)
   return (
     <header className="topbar">
       <div className="tb-brand">
-        <span className="tb-fox">🦊</span> LinguaFox
+        <span className="tb-fox">{state.avatar}</span> LinguaFox
+        <span className="tb-level-badge">Lv.{levelInfo.level}</span>
       </div>
       <div className="tb-stats">
         <span className="tb-stat streak" title="Racha">
@@ -80,6 +136,9 @@ function TopBar() {
         <span className="tb-stat heart" title="Vidas">
           ❤️ {state.hearts}
         </span>
+        <button className="tb-stat trophy-btn" title="Logros" onClick={onAchievements}>
+          🏆
+        </button>
       </div>
     </header>
   )
