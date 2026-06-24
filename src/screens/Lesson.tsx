@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useGame } from '../context/GameContext'
 import { getLessonById } from '../data/lessons'
 import { speak, useSpeechRecognition } from '../hooks/useSpeech'
+import { playCorrect, playWrong } from '../hooks/useSounds'
 import type { Exercise } from '../types'
 
 interface Props {
@@ -31,8 +32,10 @@ export default function Lesson({ lessonId, onExit, onFinish }: Props) {
     setWasCorrect(correct)
     if (correct) {
       setCorrectCount((c) => c + 1)
+      if (state.soundEnabled) playCorrect()
     } else {
       dispatch({ type: 'LOSE_HEART' })
+      if (state.soundEnabled) playWrong()
     }
   }
 
@@ -155,6 +158,8 @@ function ExerciseView({
       return <SpeakExercise exercise={exercise} onResult={onResult} answered={answered} />
     case 'fillBlank':
       return <FillBlankExercise exercise={exercise} onResult={onResult} answered={answered} />
+    case 'dictation':
+      return <DictationExercise exercise={exercise} onResult={onResult} answered={answered} />
   }
 }
 
@@ -441,6 +446,53 @@ function FillBlankExercise({ exercise, onResult, answered }: any) {
           )
         })}
       </div>
+    </div>
+  )
+}
+
+
+
+// ---------- Dictado (escribir lo que oyes) ----------
+function DictationExercise({ exercise, onResult, answered }: any) {
+  const [input, setInput] = useState('')
+  const [showAnswer, setShowAnswer] = useState(false)
+
+  function check() {
+    const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim()
+    const correct = normalize(input) === normalize(exercise.answer)
+    setShowAnswer(true)
+    onResult(correct)
+  }
+
+  return (
+    <div className="exercise fade-in">
+      <h2 className="ex-prompt">{exercise.prompt}</h2>
+      <div className="listen-zone">
+        <SpeakerBtn text={exercise.audioText} big />
+        <p className="muted">Escucha y escribe lo que oyes</p>
+      </div>
+      <input
+        className="text-input"
+        placeholder="Escribe en inglés..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        disabled={answered}
+        onKeyDown={(e) => { if (e.key === 'Enter' && input.trim()) check() }}
+      />
+      {showAnswer && !answered && (
+        <p className="muted">Respuesta: {exercise.answer}</p>
+      )}
+      {answered && (
+        <div style={{ marginTop: '8px' }}>
+          <p className="muted">Respuesta correcta: <strong>{exercise.answer}</strong></p>
+          <p className="muted">{exercise.translation}</p>
+        </div>
+      )}
+      {!answered && (
+        <button className="btn-check" disabled={!input.trim()} onClick={check}>
+          COMPROBAR
+        </button>
+      )}
     </div>
   )
 }
