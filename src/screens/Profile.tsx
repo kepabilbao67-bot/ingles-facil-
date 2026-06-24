@@ -1,13 +1,19 @@
 import { useGame } from '../context/GameContext'
 import { masteryLevel } from '../srs'
+import { UNITS } from '../data/lessons'
 
 export default function Profile() {
   const { state, dispatch } = useGame()
   const cards = Object.values(state.srs)
   const mastered = cards.filter((c) => masteryLevel(c) === 'mastered').length
   const learning = cards.filter((c) => ['learning', 'review'].includes(masteryLevel(c))).length
+  const totalLessons = UNITS.flatMap((u) => u.lessons).length
 
   const goalPct = Math.min(100, Math.round((state.xpToday / state.dailyGoal) * 100))
+
+  // Calculate level progress
+  const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1']
+  const currentLevelIdx = levelOrder.indexOf(state.level)
 
   return (
     <div className="profile fade-in">
@@ -15,6 +21,17 @@ export default function Profile() {
         <div className="avatar">🦊</div>
         <h2>{state.name || 'Estudiante'}</h2>
         <span className="level-pill">Nivel {state.level}</span>
+        <div className="level-path">
+          {levelOrder.map((lvl, i) => (
+            <span
+              key={lvl}
+              className={`level-dot ${i <= currentLevelIdx ? 'active' : ''}`}
+              title={lvl}
+            >
+              {lvl}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div className="daily-goal-card">
@@ -34,8 +51,8 @@ export default function Profile() {
         <Stat icon="🔥" value={state.streak} label="Días de racha" />
         <Stat icon="⭐" value={state.xp} label="XP total" />
         <Stat icon="💎" value={state.gems} label="Gemas" />
-        <Stat icon="📚" value={state.completedLessons.length} label="Lecciones" />
-        <Stat icon="🧠" value={mastered} label="Palabras dominadas" />
+        <Stat icon="📚" value={state.completedLessons.length} label={`Lecciones (${totalLessons})`} />
+        <Stat icon="🧠" value={mastered} label="Dominadas" />
         <Stat icon="📖" value={learning} label="Aprendiendo" />
       </div>
 

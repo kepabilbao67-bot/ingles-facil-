@@ -51,10 +51,12 @@ export default function Lesson({ lessonId, onExit, onFinish }: Props) {
   if (finished) {
     const earnedXp = 10 + correctCount * 2
     const accuracy = Math.round((correctCount / total) * 100)
+    const stars = accuracy >= 90 ? 3 : accuracy >= 70 ? 2 : 1
     return (
       <div className="lesson-complete fade-in">
         <div className="lc-mascot">🦊🎉</div>
         <h1>¡Lección completada!</h1>
+        <div className="lc-stars">{'⭐'.repeat(stars)}{'☆'.repeat(3 - stars)}</div>
         <div className="lc-stats">
           <div className="lc-stat xp">
             <span className="lc-stat-val">+{earnedXp}</span>
@@ -278,6 +280,7 @@ function MatchExercise({ exercise, onResult, answered }: any) {
   const [enSel, setEnSel] = useState<string | null>(null)
   const [matched, setMatched] = useState<Record<string, string>>({})
   const [wrongFlash, setWrongFlash] = useState<string | null>(null)
+  const [mistakes, setMistakes] = useState(0)
 
   const esShuffled = useMemo(() => [...pairs].sort(() => Math.random() - 0.5), [pairs])
 
@@ -288,11 +291,19 @@ function MatchExercise({ exercise, onResult, answered }: any) {
       const nm = { ...matched, [enSel]: es }
       setMatched(nm)
       setEnSel(null)
-      if (Object.keys(nm).length === pairs.length) onResult(true)
+      if (Object.keys(nm).length === pairs.length) {
+        // Consider correct if less than 2 mistakes
+        onResult(mistakes < 2)
+      }
     } else {
+      setMistakes((m) => m + 1)
       setWrongFlash(es)
       setTimeout(() => setWrongFlash(null), 400)
       setEnSel(null)
+      // If too many mistakes, mark as wrong
+      if (mistakes + 1 >= pairs.length) {
+        onResult(false)
+      }
     }
   }
 

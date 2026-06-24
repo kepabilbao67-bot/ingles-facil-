@@ -14,6 +14,7 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('home')
   const [activeLesson, setActiveLesson] = useState<string | null>(null)
   const [practiceKey, setPracticeKey] = useState(0)
+  const [showConfetti, setShowConfetti] = useState(false)
 
   if (!state.onboarded) return <Onboarding />
 
@@ -22,7 +23,11 @@ export default function App() {
       <Lesson
         lessonId={activeLesson}
         onExit={() => setActiveLesson(null)}
-        onFinish={() => setActiveLesson(null)}
+        onFinish={() => {
+          setActiveLesson(null)
+          setShowConfetti(true)
+          setTimeout(() => setShowConfetti(false), 3000)
+        }}
       />
     )
   }
@@ -31,6 +36,7 @@ export default function App() {
 
   return (
     <div className="app">
+      {showConfetti && <Confetti />}
       <TopBar />
 
       <main className="content">
@@ -66,7 +72,7 @@ function TopBar() {
       </div>
       <div className="tb-stats">
         <span className="tb-stat streak" title="Racha">
-          🔥 {state.streak}
+          <span className="streak-flame">🔥</span> {state.streak}
         </span>
         <span className="tb-stat gem" title="Gemas">
           💎 {state.gems}
@@ -100,5 +106,34 @@ function NavBtn({
       </span>
       <span className="nav-label">{label}</span>
     </button>
+  )
+}
+
+function Confetti() {
+  const colors = ['#58cc02', '#1cb0f6', '#ff4b4b', '#ff9600', '#ffc800', '#a560e8', '#e84393']
+  const pieces = Array.from({ length: 50 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    size: 6 + Math.random() * 8,
+  }))
+
+  return (
+    <div className="confetti-container">
+      {pieces.map((p) => (
+        <div
+          key={p.id}
+          className="confetti-piece"
+          style={{
+            left: `${p.left}%`,
+            animationDelay: `${p.delay}s`,
+            backgroundColor: p.color,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+          }}
+        />
+      ))}
+    </div>
   )
 }
