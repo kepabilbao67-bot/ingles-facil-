@@ -9,6 +9,7 @@ export type ExerciseType =
   | 'match' // emparejar palabras
   | 'speak' // practica de pronunciacion
   | 'fillBlank' // completar el hueco
+  | 'dictation' // escribir lo que oyes
 
 export interface BaseExercise {
   id: string
@@ -59,6 +60,13 @@ export interface FillBlankExercise extends BaseExercise {
   translation: string
 }
 
+export interface DictationExercise extends BaseExercise {
+  type: 'dictation'
+  audioText: string // texto en ingles que se reproduce
+  answer: string // respuesta correcta (lo que deben escribir)
+  translation: string // traduccion al español
+}
+
 export type Exercise =
   | MultipleChoiceExercise
   | TranslateExercise
@@ -66,6 +74,7 @@ export type Exercise =
   | MatchExercise
   | SpeakExercise
   | FillBlankExercise
+  | DictationExercise
 
 export interface VocabItem {
   en: string
@@ -121,4 +130,13 @@ export interface PlayerState {
   srs: Record<string, SRSCard>
   darkMode: boolean
   onboarded: boolean
+  // New fields
+  avatar: string // emoji avatar
+  playerLevel: number // 1-50
+  xpHistory: Record<string, number> // YYYY-MM-DD -> XP earned that day
+  challengesCompleted: number
+  lastChallengeDate: string | null // YYYY-MM-DD
+  soundEnabled: boolean
+  unlockedAchievements: string[] // achievement IDs
+  theme: string // theme ID
 }
