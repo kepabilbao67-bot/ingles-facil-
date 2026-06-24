@@ -1564,3 +1564,202 @@ button {
   color: var(--blue);
   font-style: italic;
 }
+
+
+/* ---------- Word of Day ---------- */
+.wod {
+  margin-bottom: 16px;
+}
+.wod-card {
+  background: var(--card);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wod-badge {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--orange);
+}
+.wod-level {
+  background: var(--bg-soft);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--muted);
+}
+.wod-word {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+.wod-en {
+  font-size: 22px;
+  font-weight: 900;
+}
+.wod-ipa {
+  font-size: 14px;
+  color: var(--blue);
+}
+.wod-speaker {
+  margin-left: auto;
+  font-size: 20px;
+}
+.wod-es {
+  font-size: 16px;
+  color: var(--green-dark);
+  font-weight: 800;
+}
+.wod-example {
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 4px;
+}
+.wod-example-en {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.wod-example-es {
+  font-size: 12px;
+  color: var(--muted);
+}
+.wod-tip {
+  font-size: 12px;
+  color: var(--blue);
+  margin-top: 4px;
+}
+
+/* ---------- Speed Game ---------- */
+.speed-game {
+  padding: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.speed-ready, .speed-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 12px;
+}
+.speed-rules {
+  text-align: left;
+  background: var(--bg-soft);
+  padding: 14px;
+  border-radius: 12px;
+  margin: 8px 0;
+  width: 100%;
+}
+.speed-rules p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+.speed-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 900;
+}
+.speed-timer {
+  color: var(--red);
+}
+.speed-score {
+  color: var(--green);
+}
+.speed-streak {
+  color: var(--orange);
+}
+.speed-question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.speed-word {
+  font-size: 28px;
+}
+.speed-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.speed-option {
+  padding: 18px 12px;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.08s;
+}
+.speed-option:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+.speed-results {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin: 12px 0;
+}
+.speed-result-item {
+  flex: 1;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.speed-result-val {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--green);
+}
+.speed-result-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------- Speed Banner ---------- */
+.speed-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--orange);
+  border-radius: 14px;
+  background: rgba(255, 150, 0, 0.08);
+  margin-bottom: 16px;
+  font-weight: 800;
+  color: var(--orange);
+  transition: all 0.15s;
+}
+.speed-banner:active {
+  transform: scale(0.98);
+}

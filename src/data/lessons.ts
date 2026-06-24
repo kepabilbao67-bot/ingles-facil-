@@ -1603,6 +1603,69 @@ export const UNITS: Unit[] = [
   },
   // ==================== B2 / C1 - GRAMÁTICA AVANZADA ====================
   {
+    id: 'u24',
+    level: 'B1',
+    title: 'Salud y Médico',
+    description: 'Vocabulario para ir al médico y hablar de salud',
+    color: '#00b894',
+    lessons: [
+      {
+        id: 'u24l1',
+        unitId: 'u24',
+        title: 'En la Consulta',
+        icon: '🏥',
+        vocab: [
+          { en: 'appointment', es: 'cita médica', ipa: '/əˈpɔɪntmənt/' },
+          { en: 'prescription', es: 'receta médica', ipa: '/prɪˈskrɪpʃən/' },
+          { en: 'symptoms', es: 'síntomas', ipa: '/ˈsɪmptəmz/' },
+          { en: 'fever', es: 'fiebre', ipa: '/ˈfiːvər/' },
+          { en: 'sore throat', es: 'dolor de garganta', ipa: '/sɔːr θroʊt/' },
+          { en: 'I feel dizzy', es: 'me siento mareado' },
+        ],
+        exercises: [
+          { id: 'u24l1e1', type: 'multipleChoice', prompt: '¿Qué es una "prescription"?', question: 'prescription', audioText: 'prescription', options: ['receta médica', 'cita médica', 'síntoma', 'fiebre'], answer: 'receta médica' },
+          { id: 'u24l1e2', type: 'fillBlank', prompt: 'Completa', sentence: 'I have a ___ and a cough.', audioText: 'I have a sore throat and a cough', options: ['sore throat', 'headache', 'broken arm', 'fever'], answer: 'sore throat', translation: 'Tengo dolor de garganta y tos.' },
+          { id: 'u24l1e3', type: 'translate', prompt: 'Traduce', sourceText: 'Necesito una cita con el médico', audioText: 'I need an appointment with the doctor', wordBank: ['I', 'need', 'an', 'appointment', 'with', 'the', 'doctor', 'prescription', 'hospital'], answerWords: ['I', 'need', 'an', 'appointment', 'with', 'the', 'doctor'] },
+          { id: 'u24l1e4', type: 'listen', prompt: 'Escucha y selecciona', audioText: 'What are your symptoms', options: ['What are your symptoms', 'Do you have a prescription', 'When is your appointment', 'I feel dizzy'], answer: 'What are your symptoms' },
+          { id: 'u24l1e5', type: 'speak', prompt: 'Pronuncia', audioText: 'I have had a fever for three days', translation: 'He tenido fiebre durante tres días' },
+          { id: 'u24l1e6', type: 'match', prompt: 'Empareja vocabulario médico', pairs: [{ en: 'appointment', es: 'cita' }, { en: 'prescription', es: 'receta' }, { en: 'fever', es: 'fiebre' }, { en: 'sore throat', es: 'dolor de garganta' }] },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'u25',
+    level: 'B1',
+    title: 'Tecnología',
+    description: 'Habla sobre tecnología e internet',
+    color: '#0984e3',
+    lessons: [
+      {
+        id: 'u25l1',
+        unitId: 'u25',
+        title: 'Internet y Redes',
+        icon: '💻',
+        vocab: [
+          { en: 'to download', es: 'descargar', ipa: '/ˌdaʊnˈloʊd/' },
+          { en: 'password', es: 'contraseña', ipa: '/ˈpæswɜːrd/' },
+          { en: 'to update', es: 'actualizar', ipa: '/ʌpˈdeɪt/' },
+          { en: 'Wi-Fi connection', es: 'conexión Wi-Fi' },
+          { en: 'to crash', es: 'bloquearse / fallar', ipa: '/kræʃ/' },
+          { en: 'storage', es: 'almacenamiento', ipa: '/ˈstɔːrɪdʒ/' },
+        ],
+        exercises: [
+          { id: 'u25l1e1', type: 'multipleChoice', prompt: '¿Qué significa "to crash"?', question: 'My computer crashed again.', audioText: 'My computer crashed again', options: ['bloquearse / fallar', 'actualizarse', 'descargarse', 'conectarse'], answer: 'bloquearse / fallar' },
+          { id: 'u25l1e2', type: 'fillBlank', prompt: 'Completa', sentence: 'I need to ___ the app to the latest version.', audioText: 'I need to update the app to the latest version', options: ['update', 'download', 'crash', 'delete'], answer: 'update', translation: 'Necesito actualizar la app a la última versión.' },
+          { id: 'u25l1e3', type: 'translate', prompt: 'Traduce', sourceText: '¿Cuál es la contraseña del Wi-Fi?', audioText: 'What is the Wi-Fi password', wordBank: ['What', 'is', 'the', 'Wi-Fi', 'password', 'connection', 'where', 'download'], answerWords: ['What', 'is', 'the', 'Wi-Fi', 'password'] },
+          { id: 'u25l1e4', type: 'listen', prompt: 'Escucha y selecciona', audioText: 'I need to free up some storage on my phone', options: ['I need to free up some storage on my phone', 'I need to download a new app', 'My Wi-Fi connection is slow', 'The computer crashed yesterday'], answer: 'I need to free up some storage on my phone' },
+          { id: 'u25l1e5', type: 'speak', prompt: 'Pronuncia', audioText: 'Can you share the Wi-Fi password with me', translation: '¿Puedes compartirme la contraseña del Wi-Fi?' },
+          { id: 'u25l1e6', type: 'match', prompt: 'Empareja vocabulario tech', pairs: [{ en: 'download', es: 'descargar' }, { en: 'password', es: 'contraseña' }, { en: 'update', es: 'actualizar' }, { en: 'storage', es: 'almacenamiento' }] },
+        ],
+      },
+    ],
+  },
+  // ==================== B2 / C1 - GRAMÁTICA AVANZADA ====================
+  {
     id: 'u21',
     level: 'B2',
     title: 'Gramática: Present Perfect',

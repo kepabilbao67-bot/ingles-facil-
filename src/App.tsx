@@ -12,6 +12,8 @@ import DailyChallenge from './screens/DailyChallenge'
 import Stats from './screens/Stats'
 import Records from './screens/Records'
 import PronunciationGuide from './screens/PronunciationGuide'
+import WordOfDay from './screens/WordOfDay'
+import SpeedGame from './screens/SpeedGame'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -25,6 +27,7 @@ export default function App() {
   const [showAchievements, setShowAchievements] = useState(false)
   const [showRecords, setShowRecords] = useState(false)
   const [showPronunciation, setShowPronunciation] = useState(false)
+  const [showSpeedGame, setShowSpeedGame] = useState(false)
   const [splashDone, setSplashDone] = useState(false)
 
   const handleSplashDone = useCallback(() => setSplashDone(true), [])
@@ -90,6 +93,20 @@ export default function App() {
     )
   }
 
+  if (showSpeedGame) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowSpeedGame(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Modo Velocidad</h3>
+        </div>
+        <div className="content">
+          <SpeedGame />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
   const today = new Date().toISOString().slice(0, 10)
   const challengeAvailable = state.lastChallengeDate !== today
@@ -100,7 +117,7 @@ export default function App() {
       <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
-        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} />}
+        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'challenge' && <DailyChallenge />}
         {tab === 'stats' && <Stats />}
