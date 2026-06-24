@@ -138,4 +138,5 @@ export interface PlayerState {
   lastChallengeDate: string | null // YYYY-MM-DD
   soundEnabled: boolean
   unlockedAchievements: string[] // achievement IDs
+  theme: string // theme ID
 }

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react'
 import type { CEFRLevel, PlayerState, VocabItem } from '../types'
 import { createCard, reviewCard } from '../srs'
+import { applyTheme } from '../data/themes'
 
 const STORAGE_KEY = 'linguafox_state_v2'
 const MAX_HEARTS = 5
@@ -34,6 +35,7 @@ function defaultState(): PlayerState {
     lastChallengeDate: null,
     soundEnabled: true,
     unlockedAchievements: [],
+    theme: 'default',
   }
 }
 
@@ -97,6 +99,7 @@ type Action =
   | { type: 'SET_AVATAR'; avatar: string }
   | { type: 'COMPLETE_CHALLENGE' }
   | { type: 'UNLOCK_ACHIEVEMENT'; id: string }
+  | { type: 'SET_THEME'; theme: string }
   | { type: 'TICK' }
   | { type: 'RESET' }
 
@@ -218,6 +221,8 @@ function reducer(state: PlayerState, action: Action): PlayerState {
         gems: state.gems + 5,
       }
     }
+    case 'SET_THEME':
+      return { ...state, theme: action.theme }
     case 'TICK': {
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {
         const hearts = Math.min(MAX_HEARTS, state.hearts + 1)
@@ -250,6 +255,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', state.darkMode)
   }, [state.darkMode])
+
+  useEffect(() => {
+    applyTheme(state.theme)
+  }, [state.theme])
 
   useEffect(() => {
     const t = setInterval(() => dispatch({ type: 'TICK' }), 10000)

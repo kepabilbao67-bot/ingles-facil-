@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGame, getPlayerLevelInfo } from '../context/GameContext'
 import { masteryLevel } from '../srs'
 import { UNITS } from '../data/lessons'
+import { THEMES } from '../data/themes'
 
 const AVATARS = ['🦊', '🐱', '🐶', '🦁', '🐼', '🐨', '🦄', '🐸', '🦉', '🐙', '🦋', '🐺', '🦈', '🐯', '🐻', '🦜']
 
@@ -17,6 +18,7 @@ export default function Profile() {
 
   const [showAvatars, setShowAvatars] = useState(false)
   const [showExport, setShowExport] = useState(false)
+  const [showThemes, setShowThemes] = useState(false)
 
   // Level path
   const levelOrder = ['A1', 'A2', 'B1', 'B2', 'C1']
@@ -140,6 +142,24 @@ export default function Profile() {
             <span className="knob" />
           </span>
         </button>
+        <button className="setting-row" onClick={() => setShowThemes(!showThemes)}>
+          <span>🎨 Tema de colores</span>
+          <span className="muted">{THEMES.find(t => t.id === state.theme)?.name || 'Clásico'}</span>
+        </button>
+        {showThemes && (
+          <div className="theme-picker fade-in">
+            {THEMES.map((t) => (
+              <button
+                key={t.id}
+                className={`theme-option ${state.theme === t.id ? 'selected' : ''}`}
+                onClick={() => dispatch({ type: 'SET_THEME', theme: t.id })}
+              >
+                <span className="theme-icon">{t.icon}</span>
+                <span>{t.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
         <button className="setting-row" onClick={() => setShowExport(!showExport)}>
           <span>💾 Exportar / Importar progreso</span>
         </button>

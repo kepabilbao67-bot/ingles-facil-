@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useGame, getPlayerLevelInfo } from './context/GameContext'
 import { getDueCards } from './srs'
+import SplashScreen from './screens/SplashScreen'
 import Onboarding from './screens/Onboarding'
 import Home from './screens/Home'
 import Lesson from './screens/Lesson'
@@ -9,6 +10,7 @@ import Profile from './screens/Profile'
 import Achievements from './screens/Achievements'
 import DailyChallenge from './screens/DailyChallenge'
 import Stats from './screens/Stats'
+import Records from './screens/Records'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -20,6 +22,12 @@ export default function App() {
   const [practiceKey, setPracticeKey] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const [showAchievements, setShowAchievements] = useState(false)
+  const [showRecords, setShowRecords] = useState(false)
+  const [splashDone, setSplashDone] = useState(false)
+
+  const handleSplashDone = useCallback(() => setSplashDone(true), [])
+
+  if (!splashDone) return <SplashScreen onDone={handleSplashDone} />
 
   if (!state.onboarded) return <Onboarding />
 
@@ -47,6 +55,20 @@ export default function App() {
         </div>
         <div className="content">
           <Achievements />
+        </div>
+      </div>
+    )
+  }
+
+  if (showRecords) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowRecords(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Records</h3>
+        </div>
+        <div className="content">
+          <Records />
         </div>
       </div>
     )
