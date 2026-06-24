@@ -35,6 +35,10 @@ function loadState(): PlayerState {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return defaultState()
     const parsed = { ...defaultState(), ...JSON.parse(raw) } as PlayerState
+    // Apply dark mode immediately to prevent flash
+    if (parsed.darkMode) {
+      document.documentElement.classList.add('dark')
+    }
     return parsed
   } catch {
     return defaultState()

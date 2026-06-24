@@ -6,7 +6,7 @@ import { speak } from '../hooks/useSpeech'
 // Repaso con repeticion espaciada (SRS)
 export default function Practice() {
   const { state, dispatch } = useGame()
-  const initialDue = useMemo(() => getDueCards(state.srs), [])
+  const initialDue = useMemo(() => getDueCards(state.srs), [state.srs])
   const [queue, setQueue] = useState(initialDue.map((c) => c.en))
   const [showAnswer, setShowAnswer] = useState(false)
   const [done, setDone] = useState(0)
