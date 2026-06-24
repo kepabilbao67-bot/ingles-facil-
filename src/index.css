@@ -1454,3 +1454,113 @@ button {
   color: var(--muted);
   font-weight: 700;
 }
+
+
+/* ---------- Pronunciation Guide ---------- */
+.pronunciation {
+  padding: 16px;
+}
+.pronunciation h2 {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.pron-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+.pron-tab {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  background: var(--card);
+  transition: all 0.15s;
+}
+.pron-tab.active {
+  border-color: var(--green);
+  background: rgba(88, 204, 2, 0.1);
+  color: var(--green);
+}
+.pron-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pron-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  text-align: left;
+  transition: all 0.15s;
+}
+.pron-card:active {
+  border-color: var(--blue);
+  transform: scale(0.98);
+}
+.pron-symbol {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--blue);
+}
+.pron-example {
+  font-size: 15px;
+  font-weight: 800;
+}
+.pron-words {
+  font-size: 13px;
+  color: var(--muted);
+}
+.pron-tip {
+  font-size: 12px;
+  color: var(--green-dark);
+  margin-top: 4px;
+}
+
+/* ---------- Pronunciation Banner ---------- */
+.pronunciation-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--blue);
+  border-radius: 14px;
+  background: rgba(28, 176, 246, 0.08);
+  margin-bottom: 16px;
+  font-weight: 800;
+  color: var(--blue);
+  transition: all 0.15s;
+}
+.pronunciation-banner:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Enhanced Flashcard ---------- */
+.fc-example {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  width: 100%;
+  text-align: center;
+}
+.fc-example-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 800;
+}
+.fc-example-text {
+  font-size: 14px;
+  color: var(--blue);
+  font-style: italic;
+}

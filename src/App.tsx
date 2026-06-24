@@ -11,6 +11,7 @@ import Achievements from './screens/Achievements'
 import DailyChallenge from './screens/DailyChallenge'
 import Stats from './screens/Stats'
 import Records from './screens/Records'
+import PronunciationGuide from './screens/PronunciationGuide'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -23,6 +24,7 @@ export default function App() {
   const [showConfetti, setShowConfetti] = useState(false)
   const [showAchievements, setShowAchievements] = useState(false)
   const [showRecords, setShowRecords] = useState(false)
+  const [showPronunciation, setShowPronunciation] = useState(false)
   const [splashDone, setSplashDone] = useState(false)
 
   const handleSplashDone = useCallback(() => setSplashDone(true), [])
@@ -74,6 +76,20 @@ export default function App() {
     )
   }
 
+  if (showPronunciation) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowPronunciation(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Pronunciación</h3>
+        </div>
+        <div className="content">
+          <PronunciationGuide />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
   const today = new Date().toISOString().slice(0, 10)
   const challengeAvailable = state.lastChallengeDate !== today
@@ -84,7 +100,7 @@ export default function App() {
       <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
-        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} />}
+        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'challenge' && <DailyChallenge />}
         {tab === 'stats' && <Stats />}

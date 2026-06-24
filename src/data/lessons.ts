@@ -1601,6 +1601,98 @@ export const UNITS: Unit[] = [
       },
     ],
   },
+  // ==================== B2 / C1 - GRAMÁTICA AVANZADA ====================
+  {
+    id: 'u21',
+    level: 'B2',
+    title: 'Gramática: Present Perfect',
+    description: 'Have/has + participio para experiencias y resultados',
+    color: '#00b894',
+    lessons: [
+      {
+        id: 'u21l1',
+        unitId: 'u21',
+        title: 'Experiencias y Resultados',
+        icon: '✅',
+        vocab: [
+          { en: 'I have been', es: 'he estado/ido' },
+          { en: 'she has done', es: 'ella ha hecho' },
+          { en: 'have you ever', es: '¿alguna vez has..?' },
+          { en: 'never', es: 'nunca' },
+          { en: 'already', es: 'ya' },
+          { en: 'yet', es: 'todavía / aún' },
+        ],
+        exercises: [
+          { id: 'u21l1e1', type: 'fillBlank', prompt: 'Completa con Present Perfect', sentence: 'I ___ never ___ to Japan.', audioText: 'I have never been to Japan', options: ['have... been', 'has... been', 'am... going', 'was... being'], answer: 'have... been', translation: 'Nunca he estado en Japón.' },
+          { id: 'u21l1e2', type: 'multipleChoice', prompt: '¿Cuál es correcta?', question: 'She ___ already finished her homework.', audioText: 'She has already finished her homework', options: ['has', 'have', 'is', 'was'], answer: 'has' },
+          { id: 'u21l1e3', type: 'translate', prompt: 'Traduce al inglés', sourceText: '¿Alguna vez has comido sushi?', audioText: 'Have you ever eaten sushi', wordBank: ['Have', 'you', 'ever', 'eaten', 'sushi', 'did', 'eat', 'was'], answerWords: ['Have', 'you', 'ever', 'eaten', 'sushi'] },
+          { id: 'u21l1e4', type: 'listen', prompt: 'Escucha y selecciona', audioText: 'I have already sent the email', options: ['I have already sent the email', 'I am sending the email now', 'I sent the email yesterday', 'I will send the email tomorrow'], answer: 'I have already sent the email' },
+          { id: 'u21l1e5', type: 'speak', prompt: 'Pronuncia esta pregunta', audioText: 'Have you ever been to London?', translation: '¿Alguna vez has estado en Londres?' },
+          { id: 'u21l1e6', type: 'dictation', prompt: 'Escucha y escribe', audioText: 'She has not finished yet', answer: 'She has not finished yet', translation: 'Ella no ha terminado todavía' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'u22',
+    level: 'C1',
+    title: 'Gramática: Voz Pasiva',
+    description: 'Passive voice para inglés formal y académico',
+    color: '#6c5ce7',
+    lessons: [
+      {
+        id: 'u22l1',
+        unitId: 'u22',
+        title: 'Pasiva en Todos los Tiempos',
+        icon: '🔄',
+        vocab: [
+          { en: 'was built', es: 'fue construido' },
+          { en: 'has been made', es: 'ha sido hecho' },
+          { en: 'will be delivered', es: 'será entregado' },
+          { en: 'is being repaired', es: 'está siendo reparado' },
+          { en: 'had been stolen', es: 'había sido robado' },
+        ],
+        exercises: [
+          { id: 'u22l1e1', type: 'fillBlank', prompt: 'Transforma a voz pasiva', sentence: 'The bridge ___ in 1890.', audioText: 'The bridge was built in 1890', options: ['was built', 'built', 'is building', 'has building'], answer: 'was built', translation: 'El puente fue construido en 1890.' },
+          { id: 'u22l1e2', type: 'multipleChoice', prompt: '¿Cuál es la pasiva correcta?', question: '"They deliver packages daily" → ?', audioText: 'Packages are delivered daily', options: ['Packages are delivered daily', 'Packages delivered daily', 'Packages is delivered daily', 'Packages was delivered daily'], answer: 'Packages are delivered daily' },
+          { id: 'u22l1e3', type: 'translate', prompt: 'Traduce usando voz pasiva', sourceText: 'El coche está siendo reparado ahora mismo', audioText: 'The car is being repaired right now', wordBank: ['The', 'car', 'is', 'being', 'repaired', 'right', 'now', 'was', 'has'], answerWords: ['The', 'car', 'is', 'being', 'repaired', 'right', 'now'] },
+          { id: 'u22l1e4', type: 'listen', prompt: 'Escucha: ¿activa o pasiva?', audioText: 'The decision has been made by the committee', options: ['Pasiva (Present Perfect)', 'Activa (Present Perfect)', 'Pasiva (Past Simple)', 'Activa (Past Simple)'], answer: 'Pasiva (Present Perfect)' },
+          { id: 'u22l1e5', type: 'speak', prompt: 'Pronuncia esta frase pasiva', audioText: 'The report will be submitted by Friday', translation: 'El informe será entregado para el viernes' },
+          { id: 'u22l1e6', type: 'dictation', prompt: 'Escucha y escribe', audioText: 'The house was built in nineteen fifty', answer: 'The house was built in 1950', translation: 'La casa fue construida en 1950' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'u23',
+    level: 'C1',
+    title: 'Gramática: Reported Speech',
+    description: 'Transmite lo que otros dijeron con precisión',
+    color: '#fd79a8',
+    lessons: [
+      {
+        id: 'u23l1',
+        unitId: 'u23',
+        title: 'Estilo Indirecto',
+        icon: '💬',
+        vocab: [
+          { en: 'he said that', es: 'él dijo que' },
+          { en: 'she told me', es: 'ella me dijo' },
+          { en: 'they asked if', es: 'preguntaron si' },
+          { en: 'he mentioned', es: 'él mencionó' },
+          { en: 'she claimed that', es: 'ella afirmó que' },
+        ],
+        exercises: [
+          { id: 'u23l1e1', type: 'fillBlank', prompt: 'Transforma a estilo indirecto', sentence: '"I am tired" → She said she ___ tired.', audioText: 'She said she was tired', options: ['was', 'is', 'am', 'were'], answer: 'was', translation: '"Estoy cansada" → Ella dijo que estaba cansada.' },
+          { id: 'u23l1e2', type: 'multipleChoice', prompt: 'Reported Speech correcto:', question: '"Will you help me?" → He asked if I...', audioText: 'He asked if I would help him', options: ['would help him', 'will help him', 'helped him', 'help him'], answer: 'would help him' },
+          { id: 'u23l1e3', type: 'translate', prompt: 'Transforma a reported speech', sourceText: 'Ella me dijo que había terminado el proyecto', audioText: 'She told me she had finished the project', wordBank: ['She', 'told', 'me', 'she', 'had', 'finished', 'the', 'project', 'has', 'said'], answerWords: ['She', 'told', 'me', 'she', 'had', 'finished', 'the', 'project'] },
+          { id: 'u23l1e4', type: 'listen', prompt: 'Escucha y selecciona el reported speech', audioText: 'He mentioned that he was leaving the company', options: ['He mentioned that he was leaving the company', 'He said I am leaving the company', 'He told that he leaves the company', 'He asked if he was leaving'], answer: 'He mentioned that he was leaving the company' },
+          { id: 'u23l1e5', type: 'speak', prompt: 'Pronuncia en estilo indirecto', audioText: 'She claimed that she had never been there before', translation: 'Ella afirmó que nunca había estado allí antes' },
+          { id: 'u23l1e6', type: 'dictation', prompt: 'Escucha y escribe', audioText: 'They asked if we could come earlier', answer: 'They asked if we could come earlier', translation: 'Preguntaron si podíamos venir antes' },
+        ],
+      },
+    ],
+  },
   // ==================== C2 - MAESTRÍA ====================
   {
     id: 'u17',
