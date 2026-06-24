@@ -4,9 +4,10 @@ import { getDueCards } from '../srs'
 
 interface Props {
   onStartLesson: (lessonId: string) => void
+  onPronunciation?: () => void
 }
 
-export default function Home({ onStartLesson }: Props) {
+export default function Home({ onStartLesson, onPronunciation }: Props) {
   const { state } = useGame()
   const due = getDueCards(state.srs).length
 
@@ -25,6 +26,13 @@ export default function Home({ onStartLesson }: Props) {
         <div className="review-banner">
           <span>🔁 Tienes <strong>{due}</strong> palabras para repasar</span>
         </div>
+      )}
+
+      {onPronunciation && (
+        <button className="pronunciation-banner" onClick={onPronunciation}>
+          <span>🗣️ Guía de Pronunciación</span>
+          <span className="muted" style={{ fontSize: '12px' }}>Aprende los sonidos del inglés</span>
+        </button>
       )}
 
       {UNITS.map((unit, unitIdx) => {
