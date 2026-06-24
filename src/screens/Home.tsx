@@ -1,12 +1,15 @@
 import { useGame } from '../context/GameContext'
 import { UNITS } from '../data/lessons'
 import { getDueCards } from '../srs'
+import WordOfDay from './WordOfDay'
 
 interface Props {
   onStartLesson: (lessonId: string) => void
+  onPronunciation?: () => void
+  onSpeedGame?: () => void
 }
 
-export default function Home({ onStartLesson }: Props) {
+export default function Home({ onStartLesson, onPronunciation, onSpeedGame }: Props) {
   const { state } = useGame()
   const due = getDueCards(state.srs).length
 
@@ -26,6 +29,22 @@ export default function Home({ onStartLesson }: Props) {
           <span>🔁 Tienes <strong>{due}</strong> palabras para repasar</span>
         </div>
       )}
+
+      {onPronunciation && (
+        <button className="pronunciation-banner" onClick={onPronunciation}>
+          <span>🗣️ Guía de Pronunciación</span>
+          <span className="muted" style={{ fontSize: '12px' }}>Aprende los sonidos del inglés</span>
+        </button>
+      )}
+
+      {onSpeedGame && (
+        <button className="speed-banner" onClick={onSpeedGame}>
+          <span>⚡ Modo Velocidad</span>
+          <span className="muted" style={{ fontSize: '12px' }}>¿Cuántas palabras en 30 seg?</span>
+        </button>
+      )}
+
+      <WordOfDay />
 
       {UNITS.map((unit, unitIdx) => {
         const unitUnlocked = isUnitUnlocked(unitIdx)
