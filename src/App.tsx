@@ -19,6 +19,8 @@ import WritingTips from './screens/WritingTips'
 import IrregularVerbs from './screens/IrregularVerbs'
 import Dialogues from './screens/Dialogues'
 import CulturalTips from './screens/CulturalTips'
+import GrammarReference from './screens/GrammarReference'
+import FalseFriendsGame from './screens/FalseFriendsGame'
 import { playComplete } from './hooks/useSounds'
 
 type Tab = 'home' | 'practice' | 'challenge' | 'stats' | 'profile'
@@ -38,6 +40,8 @@ export default function App() {
   const [showIrregularVerbs, setShowIrregularVerbs] = useState(false)
   const [showDialogues, setShowDialogues] = useState(false)
   const [showCulturalTips, setShowCulturalTips] = useState(false)
+  const [showGrammarRef, setShowGrammarRef] = useState(false)
+  const [showFalseFriends, setShowFalseFriends] = useState(false)
   const [splashDone, setSplashDone] = useState(false)
 
   const handleSplashDone = useCallback(() => setSplashDone(true), [])
@@ -187,6 +191,34 @@ export default function App() {
     )
   }
 
+  if (showGrammarRef) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowGrammarRef(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Gramática</h3>
+        </div>
+        <div className="content">
+          <GrammarReference />
+        </div>
+      </div>
+    )
+  }
+
+  if (showFalseFriends) {
+    return (
+      <div className="app">
+        <div className="lesson-top" style={{ padding: '16px' }}>
+          <button className="close-btn" onClick={() => setShowFalseFriends(false)}>✕</button>
+          <h3 style={{ flex: 1, textAlign: 'center' }}>Falsos Amigos</h3>
+        </div>
+        <div className="content">
+          <FalseFriendsGame />
+        </div>
+      </div>
+    )
+  }
+
   const due = getDueCards(state.srs).length
   const today = new Date().toISOString().slice(0, 10)
   const challengeAvailable = state.lastChallengeDate !== today
@@ -197,7 +229,7 @@ export default function App() {
       <TopBar onAchievements={() => setShowAchievements(true)} />
 
       <main className="content">
-        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} onReading={() => setShowReading(true)} onWritingTips={() => setShowWritingTips(true)} onIrregularVerbs={() => setShowIrregularVerbs(true)} onDialogues={() => setShowDialogues(true)} onCulturalTips={() => setShowCulturalTips(true)} />}
+        {tab === 'home' && <Home onStartLesson={(id) => setActiveLesson(id)} onPronunciation={() => setShowPronunciation(true)} onSpeedGame={() => setShowSpeedGame(true)} onReading={() => setShowReading(true)} onWritingTips={() => setShowWritingTips(true)} onIrregularVerbs={() => setShowIrregularVerbs(true)} onDialogues={() => setShowDialogues(true)} onCulturalTips={() => setShowCulturalTips(true)} onGrammarRef={() => setShowGrammarRef(true)} onFalseFriends={() => setShowFalseFriends(true)} />}
         {tab === 'practice' && <Practice key={practiceKey} />}
         {tab === 'challenge' && <DailyChallenge />}
         {tab === 'stats' && <Stats />}

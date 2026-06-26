@@ -12,9 +12,11 @@ interface Props {
   onIrregularVerbs?: () => void
   onDialogues?: () => void
   onCulturalTips?: () => void
+  onGrammarRef?: () => void
+  onFalseFriends?: () => void
 }
 
-export default function Home({ onStartLesson, onPronunciation, onSpeedGame, onReading, onWritingTips, onIrregularVerbs, onDialogues, onCulturalTips }: Props) {
+export default function Home({ onStartLesson, onPronunciation, onSpeedGame, onReading, onWritingTips, onIrregularVerbs, onDialogues, onCulturalTips, onGrammarRef, onFalseFriends }: Props) {
   const { state } = useGame()
   const due = getDueCards(state.srs).length
 
@@ -81,6 +83,18 @@ export default function Home({ onStartLesson, onPronunciation, onSpeedGame, onRe
             <button className="tool-card" onClick={onCulturalTips}>
               <span className="tool-icon">🌍</span>
               <span>Cultura</span>
+            </button>
+          )}
+          {onGrammarRef && (
+            <button className="tool-card" onClick={onGrammarRef}>
+              <span className="tool-icon">📐</span>
+              <span>Gramática</span>
+            </button>
+          )}
+          {onFalseFriends && (
+            <button className="tool-card" onClick={onFalseFriends}>
+              <span className="tool-icon">⚠️</span>
+              <span>Falsos Amigos</span>
             </button>
           )}
           {onPronunciation && (

@@ -2259,3 +2259,141 @@ button {
   transform: scale(1.15);
   box-shadow: 0 2px 8px rgba(28, 176, 246, 0.4);
 }
+
+
+/* ---------- Grammar Reference ---------- */
+.grammar-ref {
+  padding: 16px;
+}
+.grammar-ref h2 {
+  text-align: center;
+  margin-bottom: 4px;
+}
+.gr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.gr-card {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 14px;
+  cursor: pointer;
+}
+.gr-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gr-icon {
+  font-size: 20px;
+}
+.gr-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.gr-body {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gr-formula {
+  background: var(--bg-soft);
+  padding: 10px;
+  border-radius: 10px;
+}
+.gr-formula-text {
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+.gr-explanation {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.gr-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.gr-example {
+  padding: 8px 10px;
+  background: rgba(28, 176, 246, 0.06);
+  border-radius: 8px;
+}
+.gr-ex-en {
+  font-size: 14px;
+  font-weight: 700;
+}
+.gr-ex-es {
+  font-size: 12px;
+  color: var(--muted);
+}
+.gr-mistake {
+  background: rgba(255, 75, 75, 0.06);
+  padding: 10px;
+  border-radius: 10px;
+  border-left: 4px solid var(--red);
+}
+
+/* ---------- False Friends Game ---------- */
+.ff-game {
+  padding: 16px;
+}
+.ff-card {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  margin: 20px 0;
+}
+.ff-word {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text);
+}
+.ff-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ff-opt {
+  width: 100%;
+  padding: 18px;
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.1s;
+}
+.ff-opt.selected {
+  border-color: var(--blue);
+  background: rgba(28, 176, 246, 0.1);
+}
+.ff-opt.correct {
+  border-color: var(--green);
+  background: rgba(88, 204, 2, 0.15);
+}
+.ff-opt.wrong {
+  border-color: var(--red);
+  background: rgba(255, 75, 75, 0.12);
+}
+.ff-explanation {
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--bg-soft);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
