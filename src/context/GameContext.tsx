@@ -132,8 +132,12 @@ function reducer(state: PlayerState, action: Action): PlayerState {
     case 'TICK': {
       // recarga de corazones por tiempo
       if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {
-        const hearts = Math.min(MAX_HEARTS, state.hearts + 1)
-        const heartsRefillAt = hearts < MAX_HEARTS ? Date.now() + HEART_REFILL_MS : null
+        const elapsed = Date.now() - state.heartsRefillAt
+        const recovered = 1 + Math.floor(elapsed / HEART_REFILL_MS)
+        const hearts = Math.min(MAX_HEARTS, state.hearts + recovered)
+        const heartsRefillAt = hearts < MAX_HEARTS
+          ? state.heartsRefillAt + recovered * HEART_REFILL_MS
+          : null
         return { ...state, hearts, heartsRefillAt }
       }
       return state
