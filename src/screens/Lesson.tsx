@@ -29,19 +29,20 @@ export default function Lesson({ lessonId, onExit, onFinish }: Props) {
   function handleResult(correct: boolean) {
     setAnswered(true)
     setWasCorrect(correct)
-    if (correct) {
-      setCorrectCount((c) => c + 1)
-    } else {
+    if (!correct) {
       dispatch({ type: 'LOSE_HEART' })
     }
   }
 
   function next() {
+    const newCorrect = correctCount + (wasCorrect ? 1 : 0)
     if (index + 1 >= total) {
-      const earnedXp = 10 + correctCount * 2
+      const earnedXp = 10 + newCorrect * 2
       dispatch({ type: 'COMPLETE_LESSON', lessonId, vocab: lesson.vocab, xp: earnedXp })
+      setCorrectCount(newCorrect)
       setFinished(true)
     } else {
+      setCorrectCount(newCorrect)
       setIndex((i) => i + 1)
       setAnswered(false)
       setWasCorrect(false)
