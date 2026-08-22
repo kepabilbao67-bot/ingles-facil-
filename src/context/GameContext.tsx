@@ -6,12 +6,15 @@ const STORAGE_KEY = 'linguafox_state_v1'
 const MAX_HEARTS = 5
 const HEART_REFILL_MS = 30 * 60 * 1000 // 30 min por corazon
 
-function todayStr(): string {
-  const d = new Date()
+function localDateStr(d: Date): string {
   const y = d.getFullYear()
   const m = String(d.getMonth() + 1).padStart(2, '0')
   const day = String(d.getDate()).padStart(2, '0')
   return `${y}-${m}-${day}`
+}
+
+function todayStr(): string {
+  return localDateStr(new Date())
 }
 
 function defaultState(): PlayerState {
@@ -72,11 +75,9 @@ function rolloverDaily(state: PlayerState): PlayerState {
 function updateStreak(state: PlayerState): PlayerState {
   const today = todayStr()
   if (state.lastActiveDay === today) return state
-  const yesterday = new Date(Date.now() - 86400000)
-  const yy = yesterday.getFullYear()
-  const ym = String(yesterday.getMonth() + 1).padStart(2, '0')
-  const yd = String(yesterday.getDate()).padStart(2, '0')
-  const yesterdayStr = `${yy}-${ym}-${yd}`
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  const yesterdayStr = localDateStr(yesterday)
   let streak = state.streak
   if (state.lastActiveDay === yesterdayStr) streak += 1
   else streak = 1
