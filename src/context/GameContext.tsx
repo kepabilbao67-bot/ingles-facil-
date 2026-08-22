@@ -43,7 +43,7 @@ function loadState(): PlayerState {
     if (parsed.darkMode) {
       document.documentElement.classList.add('dark')
     }
-    return parsed
+    return rolloverDaily(parsed)
   } catch {
     return defaultState()
   }
@@ -138,17 +138,18 @@ function reducer(state: PlayerState, action: Action): PlayerState {
     case 'TOGGLE_DARK':
       return { ...state, darkMode: !state.darkMode }
     case 'TICK': {
+      const s = rolloverDaily(state)
       // recarga de corazones por tiempo
-      if (state.heartsRefillAt && Date.now() >= state.heartsRefillAt) {
-        const elapsed = Date.now() - state.heartsRefillAt
+      if (s.heartsRefillAt && Date.now() >= s.heartsRefillAt) {
+        const elapsed = Date.now() - s.heartsRefillAt
         const recovered = 1 + Math.floor(elapsed / HEART_REFILL_MS)
-        const hearts = Math.min(MAX_HEARTS, state.hearts + recovered)
+        const hearts = Math.min(MAX_HEARTS, s.hearts + recovered)
         const heartsRefillAt = hearts < MAX_HEARTS
-          ? state.heartsRefillAt + recovered * HEART_REFILL_MS
+          ? s.heartsRefillAt + recovered * HEART_REFILL_MS
           : null
-        return { ...state, hearts, heartsRefillAt }
+        return { ...s, hearts, heartsRefillAt }
       }
-      return state
+      return s
     }
     case 'RESET':
       return defaultState()
