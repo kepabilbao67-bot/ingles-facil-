@@ -14,6 +14,8 @@ export default function Home({ onStartLesson }: Props) {
   // others require completing at least one lesson from the previous unit
   function isUnitUnlocked(unitIndex: number): boolean {
     if (unitIndex === 0) return true
+    const selectedLevelStart = UNITS.findIndex((u) => u.level === state.level)
+    if (unitIndex === selectedLevelStart) return true
     const prevUnit = UNITS[unitIndex - 1]
     const prevLessons = prevUnit.lessons
     return prevLessons.some((l) => state.completedLessons.includes(l.id))
