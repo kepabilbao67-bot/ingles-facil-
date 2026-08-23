@@ -384,7 +384,12 @@ function SpeakExercise({ exercise, onResult, answered }: any) {
         </div>
       ) : (
         <>
-          <button className={`mic-btn ${listening ? 'recording' : ''}`} disabled={answered} onClick={tryListen}>
+          <button
+            className={`mic-btn ${listening ? 'recording' : ''}`}
+            disabled={answered}
+            onClick={tryListen}
+            aria-label="Grabar pronunciación"
+          >
             🎤
           </button>
           <p className="muted">{listening ? 'Escuchando...' : 'Toca y habla'}</p>
@@ -394,7 +399,15 @@ function SpeakExercise({ exercise, onResult, answered }: any) {
               <small>Dijiste: "{transcript}"</small>
             </div>
           )}
-          {error && <p className="error-text">{error}</p>}
+          {error && (
+            <div className="speak-fallback">
+              <p className="error-text">{error}</p>
+              <p className="muted">Puedes continuar sin grabar y practicar la frase en voz alta.</p>
+              <button className="btn-check" onClick={() => onResult(true)}>
+                CONTINUAR SIN MICRÓFONO
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>
