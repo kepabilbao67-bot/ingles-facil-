@@ -5,10 +5,10 @@
   "outputDirectory": "dist/client",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/call/:characterId", "destination": "/call/[characterId].html" },
-    { "source": "/character/:characterId", "destination": "/character/[characterId].html" },
-    { "source": "/lesson/:lessonId", "destination": "/lesson/[lessonId].html" },
-    { "source": "/quiz/:lessonId", "destination": "/quiz/[lessonId].html" },
-    { "source": "/result/:lessonId", "destination": "/result/[lessonId].html" }
+    { "source": "/call/:characterId", "destination": "/_dynamic/call" },
+    { "source": "/character/:characterId", "destination": "/_dynamic/character" },
+    { "source": "/lesson/:lessonId", "destination": "/_dynamic/lesson" },
+    { "source": "/quiz/:lessonId", "destination": "/_dynamic/quiz" },
+    { "source": "/result/:lessonId", "destination": "/_dynamic/result" }
   ]
 }

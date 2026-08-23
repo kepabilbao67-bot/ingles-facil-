@@ -41,7 +41,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build:web-preview": "expo export --platform web --output-dir dist && cp -R dist/server/. dist/client/",
+    "build:web-preview": "expo export --platform web --output-dir dist && node scripts/prepare-web-preview.mjs",
     "lint": "expo lint",
     "test": "node --test --experimental-strip-types tests/*.test.mjs"
   },
